@@ -81,3 +81,13 @@
 0:30:04 Tab5 StartNav44 #typed
 0:30:04 Tab5 FinishNav44
 0:30:04 Tab5 PageLoad
+0:33:40 Tab5 StartNav45 #typed
+0:33:40 Tab5 FinishNav45
+0:33:40 Tab5 PageLoad
+0:33:44 Tab5 StartNav46 #typed
+0:33:44 Tab5 FinishNav46
+0:33:44 Tab5 PageLoad
+0:39:06 Tab5 StartNav47 #typed
+0:39:06 Tab5 FinishNav47
+0:39:06 Tab5 PageLoad
+0:50:23 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp

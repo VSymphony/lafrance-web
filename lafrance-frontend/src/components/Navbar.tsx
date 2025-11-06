@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
-  const { role : userRole, logout } = useAuth();
+  const { role: userRole, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -11,28 +11,56 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-900 text-white px-8 py-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold">🍽️ La France</h1>
+    <nav className="bg-[#0a1f44] text-white px-6 py-4 shadow-md font-serif">
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+        {/* Logo / Marca */}
+        <Link to="/" className="text-2xl font-bold tracking-wide hover:text-yellow-400 transition">
+          🍽️ La France
+        </Link>
 
-      <ul className="flex space-x-6 items-center">
-        <li><Link to="/" className="hover:text-yellow-400">Inicio</Link></li>
+        {/* Navegación */}
+        <ul className="flex space-x-6 items-center text-sm font-medium">
+          <li>
+            <Link to="/" className="hover:text-yellow-400 transition">Inicio</Link>
+          </li>
 
-        {userRole === "ADMIN" ? (
-          <>
-            <li><Link to="/admin" className="hover:text-yellow-400">Panel del Adminístrador</Link></li>
-            <li><button onClick={handleLogout} className="hover:text-red-400">Cerrar sesión</button></li>
-          </>
-        ) : userRole === "CLIENTE" ? (
-          <>
-            <li><Link to="/menu" className="hover:text-yellow-400">Menú</Link></li>
-            <li><Link to="/reservas" className="hover:text-yellow-400">Reservas</Link></li>
-            <li><Link to="/pedidos" className="hover:text-yellow-400">Pedidos</Link></li>
-            <li><button onClick={handleLogout} className="hover:text-red-400">Cerrar sesión</button></li>
-          </>
-        ) : (
-          <li><Link to="/login" className="hover:text-yellow-400">Login</Link></li>
-        )}
-      </ul>
+          {userRole === "ADMIN" ? (
+            <>
+              <li>
+                <Link to="/admin" className="hover:text-yellow-400 transition">
+                  Panel del Administrador
+                </Link>
+              </li>
+              <li>
+                <button onClick={handleLogout} className="hover:text-red-400 transition">
+                  Cerrar sesión
+                </button>
+              </li>
+            </>
+          ) : userRole === "CLIENTE" ? (
+            <>
+              <li>
+                <Link to="/menu" className="hover:text-yellow-400 transition">Menú</Link>
+              </li>
+              <li>
+                <Link to="/reservas" className="hover:text-yellow-400 transition">Reservas</Link>
+              </li>
+              <li>
+                <Link to="/pedidos" className="hover:text-yellow-400 transition">Pedidos</Link>
+              </li>
+              <li>
+                <button onClick={handleLogout} className="hover:text-red-400 transition">
+                  Cerrar sesión
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link to="/login" className="hover:text-yellow-400 transition">Login</Link>
+            </li>
+          )}
+        </ul>
+      </div>
     </nav>
   );
 }

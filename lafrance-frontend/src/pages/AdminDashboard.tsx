@@ -10,7 +10,7 @@ export default function AdminDashboard() {
         <div className="space-y-4">
           <Link
             to="/admin/categorias"
-            className="block bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg"
+            className="block bg-blue-500 hover:bg-yellow-600 text-white py-3 rounded-lg"
           >
             Gestionar Categorías
           </Link>
@@ -22,12 +22,18 @@ export default function AdminDashboard() {
             Gestionar Productos
           </Link>
 
-          {/* ✅ Nueva opción: Gestión de Reservas */}
           <Link
             to="/admin/reservas"
-            className="block bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg"
+            className="block bg-green-500 hover:bg-yellow-600 text-white py-3 rounded-lg"
           >
             Gestionar Reservas
+          </Link>
+
+          <Link
+            to="/admin/pedidos"
+            className="block bg-red-500 hover:bg-yellow-600 text-white py-3 rounded-lg"
+          >
+            Gestionar Pedidos
           </Link>
         </div>
       </div>

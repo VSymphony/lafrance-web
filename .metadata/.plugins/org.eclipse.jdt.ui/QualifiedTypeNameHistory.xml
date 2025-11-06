@@ -11,4 +11,5 @@
     <fullyQualifiedTypeName name="java.util.Optional"/>
     <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.RolRepository"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.MesaRepository"/>
 </qualifiedTypeNameHistroy>

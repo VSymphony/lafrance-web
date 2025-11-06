@@ -81,7 +81,7 @@ export default function Login() {
           </button>
           <p className="text-center mt-4">
             ¿No tienes cuenta?{" "}
-            <a href="/registro" className="text-yellow-600 hover:underline">
+            <a href="/registro" className="text-blue-600 hover:underline">
               Crear una cuenta
             </a>
           </p>
