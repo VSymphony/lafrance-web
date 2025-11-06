@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="jakarta.persistence.Entity"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Table"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.ProductoDTO"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.model.Categoria"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.CategoriaRepository"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.ProductoRepository"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
+    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.RolRepository"/>
+</qualifiedTypeNameHistroy>

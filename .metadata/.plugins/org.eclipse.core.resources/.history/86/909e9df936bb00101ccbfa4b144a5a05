@@ -1,0 +1,27 @@
+package com.proyecto.lafrance.controller;
+
+import com.proyecto.lafrance.model.Usuario;
+import com.proyecto.lafrance.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/usuarios")
+@CrossOrigin(origins = "http://localhost:5173") // <-- React local
+public class UsuarioController {
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @PostMapping("/login")
+    public Usuario login(@RequestBody Usuario loginData) {
+        Optional<Usuario> usuario = usuarioRepository.findByCorreoAndContrasena(
+                loginData.getCorreo(),
+                loginData.getContrasena()
+        );
+
+        return usuario.orElse(null);
+    }
+}

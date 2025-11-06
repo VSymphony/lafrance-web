@@ -1,0 +1,39 @@
+package com.proyecto.lafrance.controller;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import com.proyecto.lafrance.model.Menu;
+import com.proyecto.lafrance.service.MenuService;
+
+@RestController
+@RequestMapping("/api/menus")
+@CrossOrigin(origins = "*")
+public class MenuController {
+
+    private final MenuService menuService;
+
+    public MenuController(MenuService menuService) {
+        this.menuService = menuService;
+    }
+
+    @GetMapping
+    public List<Menu> listar() {
+        return menuService.listar();
+    }
+
+    @PostMapping
+    public Menu crear(@RequestBody Menu menu) {
+        return menuService.guardar(menu);
+    }
+
+    @PutMapping("/{id}")
+    public Menu actualizar(@PathVariable Long id, @RequestBody Menu menu) {
+        menu.setId(id);
+        return menuService.guardar(menu);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Long id) {
+        menuService.eliminar(id);
+    }
+}

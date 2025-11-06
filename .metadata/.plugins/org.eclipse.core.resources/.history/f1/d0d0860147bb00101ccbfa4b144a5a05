@@ -1,0 +1,43 @@
+-- =====================================
+--  ROLES
+-- =====================================
+INSERT INTO rol (nombre)
+SELECT 'ADMIN'
+WHERE NOT EXISTS (SELECT 1 FROM rol WHERE nombre = 'ADMIN');
+
+INSERT INTO rol (nombre)
+SELECT 'CLIENTE'
+WHERE NOT EXISTS (SELECT 1 FROM rol WHERE nombre = 'CLIENTE');
+
+-- =====================================
+--  USUARIOS
+-- =====================================
+-- Crear roles si no existen
+INSERT INTO rol (nombre)
+SELECT 'ADMIN' WHERE NOT EXISTS (SELECT 1 FROM rol WHERE nombre = 'ADMIN');
+
+INSERT INTO rol (nombre)
+SELECT 'CLIENTE' WHERE NOT EXISTS (SELECT 1 FROM rol WHERE nombre = 'CLIENTE');
+
+-- Crear usuario admin si no existe
+INSERT INTO usuario (nombre, correo, contrasena, telefono, rol_id)
+SELECT 'Administrador', 'admin@lafrance.com', 'admin123', '999888777', id
+FROM rol
+WHERE nombre = 'ADMIN'
+AND NOT EXISTS (SELECT 1 FROM usuario WHERE correo = 'admin@lafrance.com');
+
+-- =====================================
+--  CATEGORÍAS
+-- =====================================
+INSERT INTO categoria (nombre) VALUES
+  ('Entrées (Entradas)'),
+  ('Plats principaux (Platos principales)'),
+  ('Salades (Ensaladas)'),
+  ('Accompagnements (Guarniciones)'),
+  ('Desserts (Postres)'),
+  ('Boissons (Bebidas)'),
+  ('Apéritifs (Aperitivos)'),
+  ('Digestifs (Digestivos)'),
+  ('Boulangerie (Panadería)'),
+  ('Pâtisserie (Pastelería)'),
+  ('Spécialités régionales (Especialidades regionales)');
