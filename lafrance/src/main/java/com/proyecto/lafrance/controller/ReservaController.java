@@ -2,6 +2,8 @@ package com.proyecto.lafrance.controller;
 
 import com.proyecto.lafrance.model.Reserva;
 import com.proyecto.lafrance.model.Usuario;
+import com.proyecto.lafrance.model.Mesa;
+import com.proyecto.lafrance.repository.MesaRepository;
 import com.proyecto.lafrance.repository.ReservaRepository;
 import com.proyecto.lafrance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class ReservaController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
+    @Autowired 
+    private MesaRepository mesaRepository;
 
     // 🟢 Obtener todas las reservas
     @GetMapping
@@ -52,8 +57,6 @@ public class ReservaController {
         }
     }
 
-
-    // 🟡 Cambiar estado (Confirmar / Rechazar)
     @PutMapping("/{id}/estado")
     public ResponseEntity<Reserva> actualizarEstado(
             @PathVariable Long id,
@@ -67,4 +70,40 @@ public class ReservaController {
 
         return ResponseEntity.ok(reserva);
     }
+    
+    @PutMapping("/{id}/mesa")
+    public ResponseEntity<Reserva> asignarMesa(
+            @PathVariable Long id,
+            @RequestBody Map<String, Long> body) {
+
+        Reserva reserva = reservaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+        Long mesaId = body.get("mesaId");
+        Mesa mesa = mesaRepository.findById(mesaId)
+                .orElseThrow(() -> new RuntimeException("Mesa no encontrada"));
+
+        reserva.setMesa(mesa);
+        mesa.setDisponible(false);
+
+        reservaRepository.save(reserva);
+        mesaRepository.save(mesa);
+
+        return ResponseEntity.ok(reserva);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarReserva(@PathVariable Long id) {
+        Reserva reserva = reservaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+        // Si tenía mesa asignada, la liberamos
+        if (reserva.getMesa() != null) {
+            reserva.getMesa().setDisponible(true);
+        }
+
+        reservaRepository.delete(reserva);
+        return ResponseEntity.noContent().build();
+    }
+
 }

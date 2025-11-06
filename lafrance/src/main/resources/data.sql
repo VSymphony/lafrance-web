@@ -55,3 +55,15 @@ INSERT INTO categoria (nombre) VALUES
   ('Boulangerie (Panadería)'),
   ('Pâtisserie (Pastelería)'),
   ('Spécialités régionales (Especialidades regionales)');
+  
+  -- 🪑 Mesas disponibles
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (1, 4, true);
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (2, 6, true);
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (3, 8, true);
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (4, 4, true);
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (5, 6, true);
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (6, 8, true);
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (7, 4, true);
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (8, 5, true);
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (9, 7, true);
+INSERT INTO mesa (numero, capacidad, disponible) VALUES (10, 6, true);
