@@ -5,11 +5,18 @@ export default function Footer() {
     <footer className="mt-10 text-white font-sans">
       <div className="grid grid-cols-1 md:grid-cols-3 text-center md:text-left">
         {/* Azul oscuro: Restaurante */}
-        <div className="bg-[#0a1f44] bg-[url('/img/lino-textura.png')] bg-cover bg-blend-overlay px-6 py-8">
-          <h3 className="text-xl font-semibold mb-2">Restaurante La France</h3>
-          <p className="text-sm text-blue-100">
-            El auténtico sabor francés en Lima. Tradición, elegancia y pasión en cada plato.
-          </p>
+        <div className="bg-[#0a1f44] bg-[url('/img/lino-textura.png')] bg-cover bg-blend-overlay px-6 py-8 flex items-center gap-4">
+          <img
+            src="/img/logo-lafrance.png"
+            alt="Logo La France"
+            className="h-15 drop-shadow-lg"
+          />
+          <div>
+            <h3 className="text-xl font-serif font-semibold text-white mb-1">Restaurante La France</h3>
+            <p className="text-sm text-blue-100 max-w-sm">
+              El auténtico sabor francés en Lima. Tradición, elegancia y pasión en cada plato.
+            </p>
+          </div>
         </div>
 
         {/* Blanco suave: Contacto */}

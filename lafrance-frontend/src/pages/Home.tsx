@@ -70,6 +70,7 @@ export default function Home() {
 
         {/* ✅ Bienvenida */}
         <div className="text-center">
+          <img src="/img/logo-lafrance.png" alt="Logo La France" className="h-24 mx-auto mb-4 drop-shadow-lg" />
           <h1 className="text-4xl font-bold text-gray-800 mb-2">🍽️ Bienvenido a La France</h1>
           <p className="text-lg text-gray-600">El auténtico sabor francés en cada bocado.</p>
         </div>

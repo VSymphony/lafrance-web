@@ -14,8 +14,12 @@ export default function Navbar() {
     <nav className="bg-[#0a1f44] text-white px-6 py-4 shadow-md font-serif">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo / Marca */}
-        <Link to="/" className="text-2xl font-bold tracking-wide hover:text-yellow-400 transition">
-          🍽️ La France
+        <Link to="/">
+          <img
+            src="/img/logo-lafrance.png"
+            alt="Restaurante La France"
+            className="h-10 w-auto"
+          />
         </Link>
 
         {/* Navegación */}
