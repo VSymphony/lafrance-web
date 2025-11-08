@@ -56,9 +56,7 @@ INSERT INTO categoria (nombre) VALUES
   ('Pâtisserie (Pastelería)'),
   ('Spécialités régionales (Especialidades regionales)');
   
--- =====================================
--- MESAS DISPONIBLES
--- =====================================
+  -- 🪑 Mesas disponibles
 INSERT INTO mesa (numero, capacidad, disponible) VALUES (1, 4, true);
 INSERT INTO mesa (numero, capacidad, disponible) VALUES (2, 6, true);
 INSERT INTO mesa (numero, capacidad, disponible) VALUES (3, 8, true);
@@ -69,30 +67,3 @@ INSERT INTO mesa (numero, capacidad, disponible) VALUES (7, 4, true);
 INSERT INTO mesa (numero, capacidad, disponible) VALUES (8, 5, true);
 INSERT INTO mesa (numero, capacidad, disponible) VALUES (9, 7, true);
 INSERT INTO mesa (numero, capacidad, disponible) VALUES (10, 6, true);
-
-
--- =====================================
--- PLATOS FRANCESES
--- =====================================
-INSERT INTO producto (nombre, descripcion, disponible, imagen_url, precio, categoria_id) VALUES
--- Entrées (Entradas)
-('Soupe à l’oignon', 'Sopa tradicional de cebolla caramelizada con queso gratinado', true, 'https://lafrance.pe/img/soupe-oignon.jpg', 24.90, 1),
-('Escargots de Bourgogne', 'Caracoles al horno con mantequilla de ajo y perejil', true, 'https://lafrance.pe/img/escargots.jpg', 32.50, 1),
-
--- Plats principaux (Platos principales)
-('Coq au vin', 'Pollo cocido en vino tinto con champiñones y tocino', true, 'https://lafrance.pe/img/coq-au-vin.jpg', 39.90, 2),
-('Boeuf Bourguignon', 'Estofado de carne de res con vino tinto y vegetales', true, 'https://lafrance.pe/img/boeuf-bourguignon.jpg', 42.00, 2),
-
--- Salades (Ensaladas)
-('Salade Niçoise', 'Ensalada con atún, huevo, aceitunas y vegetales frescos', true, 'https://lafrance.pe/img/salade-nicoise.jpg', 28.00, 3),
-
--- Accompagnements (Guarniciones)
-('Gratin Dauphinois', 'Papas gratinadas con crema y queso', true, 'https://lafrance.pe/img/gratin-dauphinois.jpg', 18.50, 4),
-
--- Desserts (Postres)
-('Crème brûlée', 'Crema pastelera con costra de azúcar caramelizado', true, 'https://lafrance.pe/img/creme-brulee.jpg', 19.90, 5),
-('Tarte Tatin', 'Tarta invertida de manzana caramelizada', true, 'https://lafrance.pe/img/tarte-tatin.jpg', 21.00, 5),
-
--- Boissons (Bebidas)
-('Vin rouge Bordeaux', 'Copa de vino tinto de la región de Bordeaux', true, 'https://lafrance.pe/img/vin-bordeaux.jpg', 25.00, 6),
-('Eau minérale Perrier', 'Agua mineral francesa con gas', true, 'https://lafrance.pe/img/perrier.jpg', 9.50, 6);

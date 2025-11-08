@@ -3144,3 +3144,183 @@ java.lang.Exception: Resolve classpath: unable to resolve a project from : file:
 	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
 	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
 	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-11-07 16:57:36.009
+!MESSAGE Failed to fetch type data for element witn key: Ljava/lang/String;
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2025-11-07 16:57:36.010
+!MESSAGE Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+!STACK 0
+java.lang.Exception: Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getProject(ResourceUtils.java:66)
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getJavaProject(ResourceUtils.java:37)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.findElement(JavaData.java:79)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.typeData(JavaData.java:67)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageClientImpl.lambda$16(STS4LanguageClientImpl.java:521)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-11-07 16:57:36.015
+!MESSAGE Failed to fetch type data for element witn key: Ljava/util/Map;
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2025-11-07 16:57:36.016
+!MESSAGE Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+!STACK 0
+java.lang.Exception: Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getProject(ResourceUtils.java:66)
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getJavaProject(ResourceUtils.java:37)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.findElement(JavaData.java:79)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.typeData(JavaData.java:67)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageClientImpl.lambda$16(STS4LanguageClientImpl.java:521)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-11-07 16:57:36.018
+!MESSAGE Failed to fetch type data for element witn key: Lorg/springframework/boot/sql/init/DatabaseInitializationMode;
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2025-11-07 16:57:36.018
+!MESSAGE Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+!STACK 0
+java.lang.Exception: Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getProject(ResourceUtils.java:66)
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getJavaProject(ResourceUtils.java:37)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.findElement(JavaData.java:79)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.typeData(JavaData.java:67)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageClientImpl.lambda$16(STS4LanguageClientImpl.java:521)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-11-07 16:57:50.269
+!MESSAGE Failed to fetch type data for element witn key: Ljava/lang/String;
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2025-11-07 16:57:50.269
+!MESSAGE Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+!STACK 0
+java.lang.Exception: Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getProject(ResourceUtils.java:66)
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getJavaProject(ResourceUtils.java:37)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.findElement(JavaData.java:79)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.typeData(JavaData.java:67)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageClientImpl.lambda$16(STS4LanguageClientImpl.java:521)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-11-07 16:57:50.274
+!MESSAGE Failed to fetch type data for element witn key: Ljava/util/Map;
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2025-11-07 16:57:50.275
+!MESSAGE Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+!STACK 0
+java.lang.Exception: Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getProject(ResourceUtils.java:66)
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getJavaProject(ResourceUtils.java:37)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.findElement(JavaData.java:79)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.typeData(JavaData.java:67)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageClientImpl.lambda$16(STS4LanguageClientImpl.java:521)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-11-07 16:57:50.277
+!MESSAGE Failed to fetch type data for element witn key: Lorg/springframework/boot/sql/init/DatabaseInitializationMode;
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2025-11-07 16:57:50.277
+!MESSAGE Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+!STACK 0
+java.lang.Exception: Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getProject(ResourceUtils.java:66)
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getJavaProject(ResourceUtils.java:37)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.findElement(JavaData.java:79)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.typeData(JavaData.java:67)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageClientImpl.lambda$16(STS4LanguageClientImpl.java:521)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-11-07 17:04:20.755
+!MESSAGE Failed to fetch type data for element witn key: Ljava/lang/String;
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2025-11-07 17:04:20.756
+!MESSAGE Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+!STACK 0
+java.lang.Exception: Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getProject(ResourceUtils.java:66)
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getJavaProject(ResourceUtils.java:37)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.findElement(JavaData.java:79)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.typeData(JavaData.java:67)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageClientImpl.lambda$16(STS4LanguageClientImpl.java:521)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-11-07 17:04:20.761
+!MESSAGE Failed to fetch type data for element witn key: Ljava/util/Map;
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2025-11-07 17:04:20.762
+!MESSAGE Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+!STACK 0
+java.lang.Exception: Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getProject(ResourceUtils.java:66)
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getJavaProject(ResourceUtils.java:37)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.findElement(JavaData.java:79)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.typeData(JavaData.java:67)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageClientImpl.lambda$16(STS4LanguageClientImpl.java:521)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-11-07 17:04:20.763
+!MESSAGE Failed to fetch type data for element witn key: Lorg/springframework/boot/sql/init/DatabaseInitializationMode;
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2025-11-07 17:04:20.764
+!MESSAGE Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+!STACK 0
+java.lang.Exception: Resolve classpath: unable to resolve a project from : file:/C:/Sistema_de_Reservas_y_Pedidos_en_L%C3%ADnea/PROYECTO_LaFrance/lafrance
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getProject(ResourceUtils.java:66)
+	at org.springframework.tooling.jdt.ls.commons.resources.ResourceUtils.getJavaProject(ResourceUtils.java:37)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.findElement(JavaData.java:79)
+	at org.springframework.tooling.jdt.ls.commons.java.JavaData.typeData(JavaData.java:67)
+	at org.springframework.tooling.ls.eclipse.commons.STS4LanguageClientImpl.lambda$16(STS4LanguageClientImpl.java:521)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)

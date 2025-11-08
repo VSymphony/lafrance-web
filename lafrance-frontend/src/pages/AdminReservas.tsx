@@ -11,13 +11,13 @@ interface Mesa {
 
 interface Usuario {
   nombre: string;
+  telefono: string;
   correo: string;
 }
 
 interface Reserva {
   id: number;
   usuario?: Usuario;
-  telefono: string;
   fechaHora: string;
   numeroPersonas: number;
   estado: string;
@@ -72,7 +72,7 @@ export default function AdminReservas() {
 
     try {
       await axios.delete(`http://localhost:8070/api/reservas/${id}`);
-      await fetchData(); // 👈 ahora llama a la función correcta
+      await fetchData();
       alert("✅ Reserva eliminada correctamente.");
     } catch (err) {
       console.error("Error al eliminar reserva:", err);
@@ -104,9 +104,9 @@ export default function AdminReservas() {
           <tbody>
             {reservas.map((r) => (
               <tr key={r.id} className="text-center">
-                <td className="border p-2">{r.usuario?.nombre}</td>
-                <td className="border p-2">{r.usuario?.correo}</td>
-                <td className="border p-2">{r.telefono}</td>
+                <td className="border p-2">{r.usuario?.nombre ?? "—"}</td>
+                <td className="border p-2">{r.usuario?.correo ?? "—"}</td>
+                <td className="border p-2">{r.usuario?.telefono ?? "—"}</td>
                 <td className="border p-2">
                   {new Date(r.fechaHora).toLocaleString()}
                 </td>
