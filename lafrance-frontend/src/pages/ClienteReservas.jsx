@@ -117,7 +117,17 @@ export default function ClienteReservas() {
             </select>
           </div>
 
-
+            {/* Teléfono */}
+          <div>
+            <h2>Teléfono de contacto</h2>
+            <input
+              name="telefono"
+              type="tel"
+              className="border p-2 w-full rounded bg-gray-100 text-gray-700"
+              value={form.telefono}
+              readOnly
+            />
+          </div>
 
           {/* Botón */}
           <button
