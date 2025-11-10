@@ -7,9 +7,17 @@
     <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.CategoriaRepository"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.ProductoRepository"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
     <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.RolRepository"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.MesaRepository"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.ReservaDTO"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.ReservaRepository"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.LoginRequest"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.model.Usuario"/>
+    <fullyQualifiedTypeName name="io.jsonwebtoken.Jwts"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
 </qualifiedTypeNameHistroy>

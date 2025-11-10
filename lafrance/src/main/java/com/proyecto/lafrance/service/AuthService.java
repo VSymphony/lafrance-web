@@ -3,7 +3,6 @@ package com.proyecto.lafrance.service;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import java.util.Base64;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
