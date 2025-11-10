@@ -1,0 +1,44 @@
+package com.proyecto.lafrance.controller;
+
+import com.proyecto.lafrance.model.Usuario;
+import com.proyecto.lafrance.repository.UsuarioRepository;
+import com.proyecto.lafrance.security.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173") // o el puerto de tu frontend
+public class AuthController {
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @PostMapping("/login")
+    public Map<String, Object> login(@RequestBody Map<String, String> credenciales) {
+        String correo = credenciales.get("correo");
+        String contrasena = credenciales.get("contrasena");
+
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+
+        Map<String, Object> respuesta = new HashMap<>();
+
+        if (usuario != null && usuario.getContrasena().equals(contrasena)) {
+            String token = jwtUtil.generarToken(usuario.getCorreo(), usuario.getRol().getNombre());
+            respuesta.put("token", token);
+            respuesta.put("rol", usuario.getRol().getNombre());
+            respuesta.put("usuarioId", usuario.getId());
+            respuesta.put("nombre", usuario.getNombre());
+        } else {
+            respuesta.put("error", "Credenciales inválidas");
+        }
+
+        return respuesta;
+    }
+}

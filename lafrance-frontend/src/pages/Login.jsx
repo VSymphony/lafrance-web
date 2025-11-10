@@ -1,94 +1,94 @@
 import { useState } from "react";
-import MainLayout from "../layouts/MainLayout";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import MainLayout from "../layouts/MainLayout";
+import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
-  const { loginAs } = useAuth();
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
-  const [error, setError] = useState("");
-  
-  
   const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ login viene del contexto
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  try {
-    const response = await axios.post("http://localhost:8070/api/usuarios/login", {
-      correo,
-      contrasena,
-    });
+    try {
+      const response = await axios.post("http://localhost:8070/api/auth/login", {
+        correo,
+        contrasena,
+      });
 
-    const user = response.data;
+      console.log("✅ Respuesta del backend:", response.data);
 
-    if (user && user.rol) {
-      // 🔥 Guardar los datos del usuario en localStorage
-      localStorage.setItem("usuarioId", user.id);
-      localStorage.setItem("usuarioNombre", user.nombre);
-      localStorage.setItem("usuarioCorreo", user.correo);
-      localStorage.setItem("usuarioRol", user.rol.nombre.toUpperCase());
+      // 🔍 Decodificar token
+      const decoded = jwtDecode(response.data.token);
+      console.log("🧩 Token decodificado:", decoded);
 
-      loginAs(user.rol.nombre.toUpperCase());
+      if (response.data.token) {
+  const decoded = jwtDecode(response.data.token);
+  console.log("🧩 Token decodificado:", decoded);
 
-      // 🟢 Redirige según el rol
-      if (user.rol.nombre.toUpperCase() === "ADMIN") {
-        navigate("/admin");
+  // Guarda todos los datos
+  localStorage.setItem("token", response.data.token);
+  localStorage.setItem("usuarioId", decoded.id);
+  localStorage.setItem("nombreUsuario", decoded.nombre);
+  localStorage.setItem("role", decoded.rol);
+
+  login(response.data.token);
+
+  const rol = decoded.rol || decoded.role;
+  if (rol === "ADMIN") navigate("/admin");
+  else navigate("/cliente");
+
+
+        
       } else {
-        navigate("/cliente");
+        alert("❌ Credenciales inválidas");
       }
-    } else {
-      setError("Credenciales inválidas");
+    } catch (error) {
+      console.error("🚨 Error en login:", error);
+      alert("⚠️ Error al iniciar sesión");
     }
-  } catch (err) {
-    console.error("❌ Error de login:", err);
-    setError("Error al conectar con el servidor");
-  }
-};
-
+  };
 
   return (
     <MainLayout>
-      <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Iniciar Sesión</h2>
+      <div className="max-w-md mx-auto mt-10 pergamino-card">
+        <h2 className="pergamino-title text-3xl mb-4">Iniciar Sesión</h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-          <input
-            type="email"
-            placeholder="Correo"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-            className="border p-2 rounded"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={contrasena}
-            onChange={(e) => setContrasena(e.target.value)}
-            className="border p-2 rounded"
-            required
-          />
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label className="block mb-1 font-semibold text-[#3e2f1c]">
+              Correo electrónico
+            </label>
+            <input
+              type="email"
+              value={correo}
+              onChange={(e) => setCorreo(e.target.value)}
+              required
+              className="pergamino-input w-full"
+            />
+          </div>
 
-          <button
-            type="submit"
-            className="block bg-[#0a1f44] hover:bg-[#7b1e1e] text-white py-3 rounded-lg font-serif transition-colors duration-300"
-          >
+          <div>
+            <label className="block mb-1 font-semibold text-[#3e2f1c]">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              value={contrasena}
+              onChange={(e) => setContrasena(e.target.value)}
+              required
+              className="pergamino-input w-full"
+            />
+          </div>
+
+          <button type="submit" className="sello-btn w-full mt-4">
             Iniciar Sesión
           </button>
-          <p className="text-center mt-4">
-            ¿No tienes cuenta?{" "}
-            <a href="/registro" className="text-blue-600 hover:underline">
-              Crear una cuenta
-            </a>
-          </p>
-
         </form>
-
-        {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
       </div>
     </MainLayout>
   );
