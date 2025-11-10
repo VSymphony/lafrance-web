@@ -31,7 +31,7 @@ public class Usuario {
     public String getContrasena() { return contrasena; }
     public void setContrasena(String contrasena) { this.contrasena = contrasena; }
     
-    public String geTelefono() { return telefono; }
+    public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
 
     public Rol getRol() { return rol; }
