@@ -1,6 +1,5 @@
 package com.proyecto.lafrance.controller;
 
-import com.proyecto.lafrance.dto.ReservaDTO;
 import com.proyecto.lafrance.model.Rol;
 import com.proyecto.lafrance.model.Usuario;
 import com.proyecto.lafrance.repository.ReservaRepository;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController

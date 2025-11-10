@@ -1,9 +1,11 @@
 package com.proyecto.lafrance.controller;
 
+import com.proyecto.lafrance.dto.LoginRequest;
 import com.proyecto.lafrance.model.Usuario;
 import com.proyecto.lafrance.repository.UsuarioRepository;
-import com.proyecto.lafrance.security.JwtUtil;
+import com.proyecto.lafrance.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,45 +21,31 @@ public class AuthController {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credenciales) {
-        try {
-            String correo = credenciales.get("correo");
-            String contrasena = credenciales.get("contrasena");
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        // 🔍 Buscar usuario por correo
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByCorreo(request.getCorreo());
 
-            // --- Manejar ambos posibles contratos del repository ---
-            // Opción A: repository devuelve Optional<Usuario>
-            Optional<Usuario> optUser = usuarioRepository.findByCorreo(correo);
-            Usuario usuario = optUser.orElse(null);
-
-            // --- Si tu repo devuelve directamente Usuario uncomment y usa esto en su lugar:
-            // Usuario usuario = usuarioRepository.findByCorreo(correo);
-
-            if (usuario == null) {
-                return ResponseEntity.status(401).body(Map.of("error", "Credenciales inválidas"));
-            }
-
-            // Validación simple (en producción usa hashing)
-            if (usuario.getContrasena() != null && usuario.getContrasena().equals(contrasena)) {
-                String rolNombre = usuario.getRol() != null ? usuario.getRol().getNombre() : "CLIENTE";
-                String token = jwtUtil.generarToken(usuario.getCorreo(), rolNombre);
-
-                Map<String, Object> body = Map.of(
-                    "token", token,
-                    "rol", rolNombre,
-                    "usuarioId", usuario.getId(),
-                    "nombre", usuario.getNombre()
-                );
-
-                return ResponseEntity.ok(body);
-            } else {
-                return ResponseEntity.status(401).body(Map.of("error", "Credenciales inválidas"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(Map.of("error", "Error interno"));
+        if (usuarioOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
+
+        Usuario usuario = usuarioOpt.get();
+
+        // ⚠️ Validar contraseña (aquí puedes usar encriptación más adelante)
+        if (!usuario.getContrasena().equals(request.getContrasena())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+        }
+
+        // 🔐 Generar token con nombre, id y rol
+        String token = authService.generarToken(usuario);
+
+        // ✅ Respuesta al frontend
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "rol", usuario.getRol().getNombre()
+        ));
     }
 }

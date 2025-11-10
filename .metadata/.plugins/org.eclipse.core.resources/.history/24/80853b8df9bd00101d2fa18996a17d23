@@ -1,0 +1,28 @@
+package com.proyecto.lafrance.service;
+
+import com.proyecto.lafrance.model.Usuario;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+
+@Service
+public class AuthService {
+
+    // 🔑 Clave secreta para firmar el token (puedes moverla a application.properties)
+    private static final String SECRET_KEY = "clave_super_secreta_12345";
+
+    // 🧩 Método para generar token JWT
+    public String generarToken(Usuario usuario) {
+        return Jwts.builder()
+                .setSubject(usuario.getCorreo()) // sub = correo
+                .claim("id", usuario.getId()) // incluye el ID
+                .claim("nombre", usuario.getNombre()) // incluye el nombre
+                .claim("rol", usuario.getRol().getNombre()) // incluye el rol (por ejemplo "ADMIN" o "CLIENTE")
+                .setIssuedAt(new Date()) // fecha de creación
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // vence en 1 hora
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // firma el token
+                .compact();
+    }
+}
