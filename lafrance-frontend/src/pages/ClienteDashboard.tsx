@@ -11,7 +11,7 @@ export default function ClienteDashboard() {
   useEffect(() => {
     const fetchNombre = async () => {
       try {
-        const res = await axios.get(`http://localhost:8070/api/usuarios/${usuarioId}`);
+        const res = await axios.get(`http://localhost:8070/api/usuarios/${Number(usuarioId)}`);
         setNombreCliente(res.data.nombre);
       } catch (err) {
         console.error("Error al obtener nombre del cliente:", err);
@@ -29,7 +29,7 @@ export default function ClienteDashboard() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          Bienvenido, {nombreCliente || "Cliente"}
+          Bienvenue, {nombreCliente || "Cliente"}
         </motion.h1>
 
         <p className="text-center text-gray-600 mb-10 italic">

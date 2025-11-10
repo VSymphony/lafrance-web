@@ -62,18 +62,18 @@ export default function ClienteReservas() {
 
   return (
     <MainLayout>
-      <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
-        <h2 className="text-2xl font-bold mb-4 text-center">Hacer una Reserva</h2>
+      <div className="max-w-md mx-auto pergamino-card mt-10">
+        <h2 className="pergamino-title text-3xl">Hacer una Reserva</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {/* Personas */}
           <div>
-            <h2>Cantidad de Personas</h2>
+            <label className="block mb-1 font-semibold text-[#3e2f1c]">Cantidad de Personas</label>
             <input
               name="personas"
               type="number"
               min="1"
-              className="border p-2 w-full rounded"
+              className="pergamino-input w-full"
               value={form.personas}
               onChange={handleChange}
               required
@@ -82,11 +82,11 @@ export default function ClienteReservas() {
 
           {/* Fecha */}
           <div>
-            <h2>Fecha de la Reserva</h2>
+            <label className="block mb-1 font-semibold text-[#3e2f1c]">Fecha de la Reserva</label>
             <input
               name="fecha"
               type="date"
-              className="border p-2 w-full rounded"
+              className="pergamino-input w-full"
               value={form.fecha}
               onChange={handleChange}
               required
@@ -95,12 +95,12 @@ export default function ClienteReservas() {
 
           {/* Hora */}
           <div>
-            <h2>Hora de la Reserva</h2>
+            <label className="block mb-1 font-semibold text-[#3e2f1c]">Hora de la Reserva</label>
             <select
               name="hora"
               value={form.hora}
               onChange={handleChange}
-              className="border p-2 w-full rounded"
+              className="pergamino-input w-full"
               required
             >
               <option value="">Seleccionar hora</option>
@@ -112,18 +112,18 @@ export default function ClienteReservas() {
               <option value="18:00">6:00 PM</option>
               <option value="19:00">7:00 PM</option>
               <option value="20:00">8:00 PM</option>
-              <option value="20:00">9:00 PM</option>
-              <option value="20:00">10:00 PM</option>
+              <option value="21:00">9:00 PM</option>
+              <option value="22:00">10:00 PM</option>
             </select>
           </div>
 
-            {/* Teléfono */}
+          {/* Teléfono */}
           <div>
-            <h2>Teléfono de contacto</h2>
+            <label className="block mb-1 font-semibold text-[#3e2f1c]">Teléfono de contacto</label>
             <input
               name="telefono"
               type="tel"
-              className="border p-2 w-full rounded bg-gray-100 text-gray-700"
+              className="pergamino-input w-full bg-[#fffdf5] text-gray-700"
               value={form.telefono}
               readOnly
             />
@@ -131,7 +131,7 @@ export default function ClienteReservas() {
 
           {/* Botón */}
           <button
-            className="bg-[#0a1f44] hover:bg-[#7b1e1e] text-white py-2 px-4 rounded w-full font-serif transition-colors duration-300"
+            className="sello-btn w-full mt-4"
           >
             Reservar
           </button>

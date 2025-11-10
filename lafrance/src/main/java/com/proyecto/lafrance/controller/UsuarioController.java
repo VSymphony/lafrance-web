@@ -19,7 +19,14 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private RolRepository rolRepository; // ✅ se inyecta aquí
+    private RolRepository rolRepository;
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> obtenerUsuarioPorId(@PathVariable Long id) {
+        return usuarioRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @PostMapping("/login")
     public Usuario login(@RequestBody Usuario loginData) {
@@ -51,4 +58,5 @@ public class UsuarioController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
 }
