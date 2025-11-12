@@ -7,6 +7,7 @@ import com.proyecto.lafrance.repository.RolRepository;
 import com.proyecto.lafrance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,6 +24,9 @@ public class UsuarioController {
 
     @Autowired
     private RolRepository rolRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     UsuarioController(ReservaRepository reservaRepository) {
         this.reservaRepository = reservaRepository;
@@ -47,6 +51,9 @@ public class UsuarioController {
     @PostMapping("/registro")
     public ResponseEntity<Usuario> registrarUsuario(@RequestBody Usuario nuevoUsuario) {
         try {
+        	String contrasenaEncriptada = passwordEncoder.encode(nuevoUsuario.getContrasena());
+        	nuevoUsuario.setContrasena(contrasenaEncriptada);
+            usuarioRepository.save(nuevoUsuario);
             // Verificar si el correo ya existe
             if (usuarioRepository.findByCorreo(nuevoUsuario.getCorreo()).isPresent()) {
                 return ResponseEntity.badRequest().build();

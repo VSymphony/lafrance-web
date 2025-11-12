@@ -1,0 +1,50 @@
+package com.proyecto.lafrance.controller;
+
+import com.proyecto.lafrance.dto.LoginRequest;
+import com.proyecto.lafrance.model.Usuario;
+import com.proyecto.lafrance.repository.UsuarioRepository;
+import com.proyecto.lafrance.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173")
+public class AuthController {
+
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private AuthService authService;
+
+    AuthController(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        Usuario usuario = usuarioRepository.findByCorreo(request.getCorreo());
+
+        if (usuario == null || !passwordEncoder.matches(request.getContrasena(), usuario.getContrasena())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+        }
+
+        String token = authService.generarToken(usuario);
+
+        return ResponseEntity.ok(Map.of(
+            "token", token,
+            "rol", usuario.getRol().getNombre(),
+            "nombre", usuario.getNombre()
+        ));
+    }
+
+}

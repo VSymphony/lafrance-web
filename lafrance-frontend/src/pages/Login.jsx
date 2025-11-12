@@ -22,28 +22,21 @@ export default function Login() {
 
       console.log("✅ Respuesta del backend:", response.data);
 
-      // 🔍 Decodificar token
-      const decoded = jwtDecode(response.data.token);
-      console.log("🧩 Token decodificado:", decoded);
-
       if (response.data.token) {
-  const decoded = jwtDecode(response.data.token);
-  console.log("🧩 Token decodificado:", decoded);
+        const decoded = jwtDecode(response.data.token);
+        console.log("🧩 Token decodificado:", decoded);
 
-  // Guarda todos los datos
-  localStorage.setItem("token", response.data.token);
-  localStorage.setItem("usuarioId", decoded.id);
-  localStorage.setItem("nombreUsuario", decoded.nombre);
-  localStorage.setItem("role", decoded.rol);
+        // Guarda todos los datos
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("usuarioId", decoded.id);
+        localStorage.setItem("nombreUsuario", decoded.nombre);
+        localStorage.setItem("role", decoded.rol);
 
-  login(response.data.token);
+        login(response.data.token);
 
-  const rol = decoded.rol || decoded.role;
-  if (rol === "ADMIN") navigate("/admin");
-  else navigate("/cliente");
-
-
-        
+        const rol = decoded.rol || decoded.role;
+        if (rol === "ADMIN") navigate("/admin");
+        else navigate("/cliente");
       } else {
         alert("❌ Credenciales inválidas");
       }
@@ -51,6 +44,11 @@ export default function Login() {
       console.error("🚨 Error en login:", error);
       alert("⚠️ Error al iniciar sesión");
     }
+  };
+
+  // 🔹 Función para ir al formulario de registro
+  const handleGoToRegister = () => {
+    navigate("/registro");
   };
 
   return (
@@ -89,6 +87,17 @@ export default function Login() {
             Iniciar Sesión
           </button>
         </form>
+
+        {/* 🔹 Enlace para ir al registro */}
+        <p className="text-center mt-4 text-[#3e2f1c]">
+          ¿No tienes una cuenta?{" "}
+          <button
+            onClick={handleGoToRegister}
+            className="text-[#8b4513] font-semibold hover:underline"
+          >
+            Regístrate aquí
+          </button>
+        </p>
       </div>
     </MainLayout>
   );
