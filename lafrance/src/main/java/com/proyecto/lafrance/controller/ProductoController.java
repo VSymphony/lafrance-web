@@ -47,10 +47,25 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
-    public Producto actualizar(@PathVariable Long id, @RequestBody Producto producto) {
-        producto.setId(id);
-        return productoService.guardar(producto);
+    public Producto actualizar(@PathVariable Long id, @RequestBody ProductoDTO dto) {
+        Producto producto = productoService.obtenerPorId(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        Categoria categoria = categoriaRepository.findById(dto.categoria_id)
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+
+        producto.setNombre(dto.nombre);
+        producto.setDescripcion(dto.descripcion);
+        producto.setPrecio(dto.precio);
+        producto.setImagen_url(dto.imagen_url);
+        producto.setDisponible(dto.disponible != null ? dto.disponible : true);
+        producto.setCategoria(categoria);
+
+        productoService.guardar(producto);
+
+        return producto;
     }
+
 
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) {

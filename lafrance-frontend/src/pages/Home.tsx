@@ -94,7 +94,7 @@ export default function Home() {
         <div className="text-center mt-10">
           <a
             href="/reservas"
-            className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg text-lg shadow"
+            className="sello-btn"
           >
             Reservar una mesa
           </a>

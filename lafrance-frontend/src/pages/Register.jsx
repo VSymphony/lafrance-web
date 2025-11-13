@@ -77,7 +77,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className="block bg-[#0a1f44] hover:bg-[#7b1e1e] text-white py-3 rounded-lg font-serif transition-colors duration-300"
+            className="sello-btn dorado"
           >
             Registrarse
           </button>
