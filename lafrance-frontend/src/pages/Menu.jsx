@@ -33,7 +33,7 @@ export default function Menu() {
             <div className="flex justify-center">
               <img
                 src="/images/fleur-divider.png"
-                alt="Decoración francesa"
+                alt=""
                 className="h-6 mt-2 opacity-80"
               />
             </div>

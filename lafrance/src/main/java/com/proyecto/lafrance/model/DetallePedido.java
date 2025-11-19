@@ -35,5 +35,5 @@ public class DetallePedido {
     public void setPedido(Pedido pedido) { this.pedido = pedido; }
 
     public Producto getProducto() { return producto; }
-    public void setProducto(Producto producto) { this.producto = producto; }
+    public void setProducto(String string) { this.producto = string; }
 }

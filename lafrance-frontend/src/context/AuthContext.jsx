@@ -6,10 +6,11 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
+  const [loading, setLoading] = useState(true); // 🔥 evita redirecciones prematuras
 
-  // 🧠 Cargar sesión si hay token guardado
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (token) {
       try {
         const decoded = jwtDecode(token);
@@ -22,7 +23,7 @@ export function AuthProvider({ children }) {
             decoded.username ||
             decoded.user ||
             "",
-          role: decoded.role || decoded.rol || "CLIENTE",
+          role: decoded.rol || decoded.role || "CLIENTE",
         };
 
         setUser(userData);
@@ -32,9 +33,10 @@ export function AuthProvider({ children }) {
         localStorage.removeItem("token");
       }
     }
+
+    setLoading(false); // 🔥 terminamos de reconstruir sesión
   }, []);
 
-  // 🔐 Login: guardar token y datos del usuario
   const login = (token) => {
     try {
       const decoded = jwtDecode(token);
@@ -47,7 +49,7 @@ export function AuthProvider({ children }) {
           decoded.username ||
           decoded.user ||
           "",
-        role: decoded.role || decoded.rol || "CLIENTE",
+        role: decoded.rol || decoded.role || "CLIENTE",
       };
 
       localStorage.setItem("token", token);
@@ -62,7 +64,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // 🚪 Logout: limpiar todo
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("usuarioId");
@@ -73,7 +74,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, role, login, logout }}>
+    <AuthContext.Provider value={{ user, role, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

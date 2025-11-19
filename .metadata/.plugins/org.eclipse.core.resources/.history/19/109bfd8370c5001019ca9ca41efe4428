@@ -1,0 +1,9 @@
+package com.proyecto.lafrance.dto;
+
+@Data
+public class DireccionDTO {
+    private String direccion;
+    private String referencia;
+    private Double lat;
+    private Double lng;
+}

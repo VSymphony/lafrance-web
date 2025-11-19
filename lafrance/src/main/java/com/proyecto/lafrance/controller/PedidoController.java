@@ -1,57 +1,89 @@
 package com.proyecto.lafrance.controller;
 
-import com.proyecto.lafrance.model.Pedido;
-import com.proyecto.lafrance.repository.PedidoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
-import java.time.LocalDate;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.proyecto.lafrance.dto.DireccionDTO;
+import com.proyecto.lafrance.dto.PedidoRequest;
+import com.proyecto.lafrance.model.Usuario;
+import com.proyecto.lafrance.repository.PedidoRepository;
+import com.proyecto.lafrance.security.JwtUtil;
+import com.proyecto.lafrance.service.PedidoService;
 
 @RestController
 @RequestMapping("/api/pedidos")
 @CrossOrigin(origins = "http://localhost:5173")
 public class PedidoController {
 
+    private final PedidoService pedidoService;
+    private final JwtUtil jwtUtil;
+
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    // 🔹 Obtener todos los pedidos (solo ADMIN)
-    @GetMapping
-    public List<Pedido> listarTodos() {
-        return pedidoRepository.findAll();
+    @Autowired
+    public PedidoController(PedidoService pedidoService, JwtUtil jwtUtil) {
+        this.pedidoService = pedidoService;
+        this.jwtUtil = jwtUtil;
     }
 
-    // 🔹 Obtener pedidos por usuario (CLIENTE)
-    @GetMapping("/usuario/{id}")
-    public List<Pedido> listarPorUsuario(@PathVariable Long id) {
-        return pedidoRepository.findByUsuarioId(id);
+    @PostMapping("/guardarDireccion")
+    public ResponseEntity<?> guardarDireccion(
+            @RequestBody DireccionDTO dto,
+            @RequestHeader("Authorization") String auth) {
+
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body("Token no proporcionado");
+        }
+
+        String token = auth.substring(7);
+
+        if (!jwtUtil.validarToken(token)) {
+            return ResponseEntity.status(401).body("Token inválido");
+        }
+
+        String correo = jwtUtil.obtenerCorreo(token);
+        pedidoService.guardarDireccion(correo, dto);
+
+        return ResponseEntity.ok(Map.of("message", "Dirección guardada"));
     }
 
-    // 🔹 Crear un nuevo pedido (CLIENTE)
-    @PostMapping
-    public Pedido crearPedido(@RequestBody Pedido pedido) {
-        pedido.setFecha_pedido(LocalDate.now());
-        pedido.setEstado("Pendiente");
-        double total = pedido.getDetalles().stream()
-                .mapToDouble(d -> d.getCantidad() * d.getPrecio_unitario())
-                .sum();
-        pedido.setTotal(total);
-        return pedidoRepository.save(pedido);
-    }
+    @PostMapping("/confirmar")
+    public ResponseEntity<?> confirmarPedido(
+            @RequestBody PedidoRequest request,
+            @RequestHeader("Authorization") String auth) {
 
-    // 🔹 Actualizar el estado del pedido (ADMIN)
-    @PutMapping("/{id}/estado")
-    public Pedido actualizarEstado(@PathVariable Long id, @RequestBody String nuevoEstado) {
-        Pedido pedido = pedidoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
-        pedido.setEstado(nuevoEstado);
-        return pedidoRepository.save(pedido);
-    }
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body("Token no proporcionado");
+        }
 
-    // 🔹 Eliminar un pedido (ADMIN)
-    @DeleteMapping("/{id}")
-    public void eliminarPedido(@PathVariable Long id) {
-        pedidoRepository.deleteById(id);
+        String token = auth.substring(7);
+
+        if (!jwtUtil.validarToken(token)) {
+            return ResponseEntity.status(401).body("Token inválido");
+        }
+
+        String correo = jwtUtil.obtenerCorreo(token);
+
+        // Aquí puedes usar tu servicio para obtener el usuario por correo
+        Usuario usuario = pedidoService.obtenerUsuarioPorCorreo(correo);
+        if (usuario == null) {
+            return ResponseEntity.status(401).body("Usuario no encontrado");
+        }
+
+        Pedido pedido = pedidoService.crearPedidoDesdeRequest(usuario, request);
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Pedido confirmado",
+                "pedidoId", pedido.getId()
+        ));
     }
 }

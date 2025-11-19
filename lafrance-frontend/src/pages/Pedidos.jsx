@@ -18,23 +18,29 @@ export default function Pedidos() {
   }, []);
 
   // 🔹 Agregar producto al carrito
-  const agregarAlCarrito = (item) => {
-    const existente = carrito.find((p) => p.id === item.id);
-    if (existente) {
-      setCarrito(
-        carrito.map((p) =>
-          p.id === item.id ? { ...p, cantidad: p.cantidad + 1 } : p
-        )
-      );
-    } else {
-      setCarrito([...carrito, { ...item, cantidad: 1 }]);
-    }
-  };
+const agregarAlCarrito = (item) => {
+  const existente = carrito.find((p) => p.id === item.id);
 
-  // 🔹 Quitar producto del carrito
-  const quitarDelCarrito = (id) => {
-    setCarrito(carrito.filter((p) => p.id !== id));
-  };
+  let nuevoCarrito;
+  if (existente) {
+    nuevoCarrito = carrito.map((p) =>
+      p.id === item.id ? { ...p, cantidad: p.cantidad + 1 } : p
+    );
+  } else {
+    nuevoCarrito = [...carrito, { ...item, cantidad: 1 }];
+  }
+
+  setCarrito(nuevoCarrito);
+  localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+};
+
+// 🔹 Quitar producto del carrito
+const quitarDelCarrito = (id) => {
+  const nuevoCarrito = carrito.filter((p) => p.id !== id);
+  setCarrito(nuevoCarrito);
+  localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+};
+
 
   // 🔹 Calcular total
   const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);

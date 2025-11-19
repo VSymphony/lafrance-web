@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
+import CartNavbar from "../components/CartNavbar";
 
 export default function Navbar() {
   const { user, role: userRole, logout } = useAuth();
@@ -100,6 +101,13 @@ export default function Navbar() {
               <li><Link to="/menu" className="hover:text-[#7a0000] transition">Menú</Link></li>
               <li><Link to="/reservas" className="hover:text-[#7a0000] transition">Reservas</Link></li>
               <li><Link to="/pedidos" className="hover:text-[#7a0000] transition">Pedidos</Link></li>
+
+              {/* 🛒 Carrito en NAVBAR (escritorio) */}
+              <li>
+                <Link to="/carrito" className="cursor-pointer hover:scale-110 transform transition">
+                  <CartNavbar />
+                </Link>
+              </li>
               <li>
                 <button
                   onClick={handleLogout}
@@ -110,6 +118,7 @@ export default function Navbar() {
               </li>
             </>
           )}
+
         </ul>
 
         {/* 📱 Menú hamburguesa */}
@@ -163,19 +172,25 @@ export default function Navbar() {
             )}
 
             {isLoggedIn && userRole === "CLIENTE" && (
-              <>
-                <Link to="/cliente" className="block hover:text-[#7a0000]">Inicio</Link>
-                <Link to="/menu" className="block hover:text-[#7a0000]">Menú</Link>
-                <Link to="/reservas" className="block hover:text-[#7a0000]">Reservas</Link>
-                <Link to="/pedidos" className="block hover:text-[#7a0000]">Pedidos</Link>
-                <button
-                  onClick={handleLogout}
-                  className="block bg-[#7a0000] hover:bg-[#9b0d0d] text-white w-full rounded-lg py-1 px-3 text-center"
-                >
-                  Cerrar sesión
-                </button>
-              </>
-            )}
+            <>
+              <Link to="/cliente" className="block hover:text-[#7a0000]">Inicio</Link>
+              <Link to="/menu" className="block hover:text-[#7a0000]">Menú</Link>
+              <Link to="/reservas" className="block hover:text-[#7a0000]">Reservas</Link>
+              <Link to="/pedidos" className="block hover:text-[#7a0000]">Pedidos</Link>
+
+              {/* 🛒 Carrito en NAVBAR (móvil) */}
+              <div className="mt-2 mb-3">
+                <CartNavbar />
+              </div>
+
+              <button
+                onClick={handleLogout}
+                className="block bg-[#7a0000] hover:bg-[#9b0d0d] text-white w-full rounded-lg py-1 px-3 text-center"
+              >
+                Cerrar sesión
+              </button>
+            </>
+          )}
           </div>
         </motion.div>
       )}

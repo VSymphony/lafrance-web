@@ -43,4 +43,5 @@ public class JwtUtil {
         return (String) Jwts.parserBuilder().setSigningKey(key).build()
                 .parseClaimsJws(token).getBody().get("rol");
     }
+
 }

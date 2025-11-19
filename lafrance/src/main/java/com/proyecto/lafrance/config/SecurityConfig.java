@@ -1,21 +1,42 @@
 package com.proyecto.lafrance.config;
 
+import com.proyecto.lafrance.security.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
 
+    private final JwtFilter jwtFilter;
+
+    public SecurityConfig(JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
-            .csrf(csrf -> csrf.disable()) // 🔒 Desactiva CSRF para APIs REST
-            .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // 🔓 Permite todos los endpoints temporalmente
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> {})
+            .sessionManagement(session ->
+                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-            .cors(); // 🌍 Habilita CORS (Cross-Origin)
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                        "/api/auth/**",
+                        "/api/pedidos/guardarDireccion"
+                ).permitAll()
+                .requestMatchers("/api/pedidos/confirmar").authenticated()
+                .anyRequest().permitAll()
+            )
+            // ⬇️ REGISTRAR FILTRO JWT ANTES DE USERNAMEPASSWORDAUTHFILTER
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 }

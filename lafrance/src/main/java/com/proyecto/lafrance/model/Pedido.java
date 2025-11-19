@@ -15,8 +15,37 @@ public class Pedido {
     private LocalDate fecha_pedido;
     private String estado;
     private Double total;
+    private String direccion;
+    private String referencia;
+    private Double lat;
+    private Double lng;
 
-    // Relación con Usuario
+
+    public String getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+	public String getReferencia() {
+		return referencia;
+	}
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
+	}
+	public Double getLat() {
+		return lat;
+	}
+	public void setLat(Double lat) {
+		this.lat = lat;
+	}
+	public Double getLng() {
+		return lng;
+	}
+	public void setLng(Double lng) {
+		this.lng = lng;
+	}
+	// Relación con Usuario
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
@@ -48,4 +77,12 @@ public class Pedido {
             detalles.forEach(d -> d.setPedido(this));
         }
     }
+	public void setMetodoPago(String metodoPago) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void setDireccionId(Long direccionId) {
+		// TODO Auto-generated method stub
+		
+	}
 }

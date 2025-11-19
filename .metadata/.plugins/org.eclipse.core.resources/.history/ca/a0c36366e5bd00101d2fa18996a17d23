@@ -1,5 +1,0 @@
-package com.proyecto.lafrance.security;
-
-public class JwtUtil {
-
-}

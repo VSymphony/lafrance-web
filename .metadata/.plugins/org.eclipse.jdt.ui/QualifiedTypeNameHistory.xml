@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="jakarta.persistence.Entity"/>
     <fullyQualifiedTypeName name="jakarta.persistence.Table"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.ProductoDTO"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.model.Categoria"/>
@@ -8,7 +7,6 @@
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.CategoriaRepository"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.ProductoRepository"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
-    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.RolRepository"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.MesaRepository"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
@@ -17,8 +15,33 @@
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.ReservaRepository"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.LoginRequest"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
-    <fullyQualifiedTypeName name="com.proyecto.lafrance.model.Usuario"/>
     <fullyQualifiedTypeName name="io.jsonwebtoken.Jwts"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="org.springframework.security.crypto.password.PasswordEncoder"/>
+    <fullyQualifiedTypeName name="lombok.Data"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.UsuarioRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.security.core.annotation.AuthenticationPrincipal"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.model.DetallePedido"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.PedidoRequest.ItemPedido"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.CrossOrigin"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.service.PedidoService"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.security.JwtUtil"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.PedidoRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestHeader"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.DireccionDTO"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.PedidoRequest"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.model.Usuario"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.model.Pedido"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Entity"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Id"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.GeneratedValue"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.GenerationType"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.ManyToOne"/>
 </qualifiedTypeNameHistroy>
