@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.lafrance.dto.DireccionDTO;
 import com.proyecto.lafrance.dto.PedidoRequest;
+import com.proyecto.lafrance.model.Pedido;
 import com.proyecto.lafrance.model.Usuario;
 import com.proyecto.lafrance.repository.PedidoRepository;
 import com.proyecto.lafrance.security.JwtUtil;
@@ -35,6 +36,38 @@ public class PedidoController {
         this.jwtUtil = jwtUtil;
     }
 
+    // ✅ Crear pedido en carrito
+    @PostMapping
+    public ResponseEntity<?> crearPedido(
+            @RequestBody PedidoRequest request,
+            @RequestHeader("Authorization") String auth) {
+
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body("Token no proporcionado");
+        }
+
+        String token = auth.substring(7);
+
+        if (!jwtUtil.validarToken(token)) {
+            return ResponseEntity.status(401).body("Token inválido");
+        }
+
+        String correo = jwtUtil.obtenerCorreo(token);
+        Usuario usuario = pedidoService.obtenerUsuarioPorCorreo(correo);
+
+        if (usuario == null) {
+            return ResponseEntity.status(401).body("Usuario no encontrado");
+        }
+
+        Pedido pedido = pedidoService.crearPedidoDesdeRequest(usuario, request);
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Pedido creado en carrito",
+                "pedidoId", pedido.getId()
+        ));
+    }
+
+    // ✅ Guardar dirección
     @PostMapping("/guardarDireccion")
     public ResponseEntity<?> guardarDireccion(
             @RequestBody DireccionDTO dto,
@@ -56,6 +89,7 @@ public class PedidoController {
         return ResponseEntity.ok(Map.of("message", "Dirección guardada"));
     }
 
+    // ✅ Confirmar pedido
     @PostMapping("/confirmar")
     public ResponseEntity<?> confirmarPedido(
             @RequestBody PedidoRequest request,
@@ -72,14 +106,13 @@ public class PedidoController {
         }
 
         String correo = jwtUtil.obtenerCorreo(token);
-
-        // Aquí puedes usar tu servicio para obtener el usuario por correo
         Usuario usuario = pedidoService.obtenerUsuarioPorCorreo(correo);
+
         if (usuario == null) {
             return ResponseEntity.status(401).body("Usuario no encontrado");
         }
 
-        Pedido pedido = pedidoService.crearPedidoDesdeRequest(usuario, request);
+        Pedido pedido = pedidoService.confirmarPedido(correo, request);
 
         return ResponseEntity.ok(Map.of(
                 "message", "Pedido confirmado",

@@ -1,0 +1,91 @@
+package com.proyecto.lafrance.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import com.proyecto.lafrance.dto.DireccionDTO;
+import com.proyecto.lafrance.dto.PedidoRequest;
+import com.proyecto.lafrance.dto.DetalleDTO;
+import com.proyecto.lafrance.model.DetallePedido;
+import com.proyecto.lafrance.model.Pedido;
+import com.proyecto.lafrance.model.Usuario;
+import com.proyecto.lafrance.repository.PedidoRepository;
+import com.proyecto.lafrance.repository.UsuarioRepository;
+
+@Service
+public class PedidoService {
+
+    private final PedidoRepository pedidoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    public PedidoService(PedidoRepository pedidoRepository) {
+        this.pedidoRepository = pedidoRepository;
+    }
+
+    public List<Pedido> listar() {
+        return pedidoRepository.findAll();
+    }
+
+    public Optional<Pedido> obtenerPorId(Long id) {
+        return pedidoRepository.findById(id);
+    }
+
+    public Pedido guardar(Pedido pedido) {
+        return pedidoRepository.save(pedido);
+    }
+
+    public void eliminar(Long id) {
+        pedidoRepository.deleteById(id);
+    }
+
+    public void guardarDireccion(String correo, DireccionDTO dto) {
+    	Usuario usuario = usuarioRepository.findByCorreo(correo)
+    	        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+
+        usuario.setDireccion(dto.getDireccion());
+        usuario.setReferencia(dto.getReferencia());
+        usuario.setLat(dto.getLat());
+        usuario.setLng(dto.getLng());
+
+        usuarioRepository.save(usuario);
+    }
+
+    public Pedido confirmarPedido(String correo, PedidoRequest req) {
+    	Usuario usuario = usuarioRepository.findByCorreo(correo)
+    	        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+
+        Pedido pedido = new Pedido();
+        pedido.setUsuario(usuario);
+        pedido.setFecha_pedido(LocalDate.now());
+        pedido.setEstado("Pendiente");
+        pedido.setDireccion(req.getDireccion());
+        pedido.setReferencia(req.getReferencia());
+        pedido.setLat(req.getLat());
+        pedido.setLng(req.getLng());
+
+        double total = 0;
+
+        for (DetalleDTO det : req.getDetalles()) {
+            DetallePedido dp = new DetallePedido();
+            dp.setPedido(pedido);
+            dp.setCantidad(det.getCantidad());
+            dp.setPrecio_unitario(det.getPrecio());
+            dp.setProducto(det.getNombreProducto());
+
+            total += det.getCantidad() * det.getPrecio();
+            pedido.getDetalles().add(dp);
+        }
+
+        pedido.setTotal(total);
+
+        return pedidoRepository.save(pedido);
+    }
+}

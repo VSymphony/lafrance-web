@@ -12,8 +12,10 @@ import com.proyecto.lafrance.dto.PedidoRequest;
 import com.proyecto.lafrance.dto.DetalleDTO;
 import com.proyecto.lafrance.model.DetallePedido;
 import com.proyecto.lafrance.model.Pedido;
+import com.proyecto.lafrance.model.Producto;
 import com.proyecto.lafrance.model.Usuario;
 import com.proyecto.lafrance.repository.PedidoRepository;
+import com.proyecto.lafrance.repository.ProductoRepository;
 import com.proyecto.lafrance.repository.UsuarioRepository;
 
 @Service
@@ -24,38 +26,27 @@ public class PedidoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private ProductoRepository productoRepository;
+
     public PedidoService(PedidoRepository pedidoRepository) {
         this.pedidoRepository = pedidoRepository;
     }
 
-    public List<Pedido> listar() {
-        return pedidoRepository.findAll();
-    }
+    // Paso 1: Crear pedido desde el carrito
+    public Pedido crearPedidoDesdeRequest(Usuario usuario, PedidoRequest req) {
+        Pedido pedido = new Pedido();
+        pedido.setUsuario(usuario);
+        pedido.setFecha_pedido(LocalDate.now());
+        pedido.setEstado("Carrito");
 
-    public Optional<Pedido> obtenerPorId(Long id) {
-        return pedidoRepository.findById(id);
-    }
+        double total = agregarDetalles(pedido, req.getDetalles());
+        pedido.setTotal(total);
 
-    public Pedido guardar(Pedido pedido) {
         return pedidoRepository.save(pedido);
     }
 
-    public void eliminar(Long id) {
-        pedidoRepository.deleteById(id);
-    }
-
-    public void guardarDireccion(String correo, DireccionDTO dto) {
-        Usuario usuario = usuarioRepository.findByCorreo(correo)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        usuario.setDireccion(dto.getDireccion());
-        usuario.setReferencia(dto.getReferencia());
-        usuario.setLat(dto.getLat());
-        usuario.setLng(dto.getLng());
-
-        usuarioRepository.save(usuario);
-    }
-
+    // Paso 2: Confirmar pedido
     public Pedido confirmarPedido(String correo, PedidoRequest req) {
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -69,21 +60,28 @@ public class PedidoService {
         pedido.setLat(req.getLat());
         pedido.setLng(req.getLng());
 
-        double total = 0;
+        double total = agregarDetalles(pedido, req.getDetalles());
+        pedido.setTotal(total);
 
-        for (DetalleDTO det : req.getDetalles()) {
+        return pedidoRepository.save(pedido);
+    }
+
+    private double agregarDetalles(Pedido pedido, List<DetalleDTO> detalles) {
+        double total = 0;
+        for (DetalleDTO det : detalles) {   // ✅ usar el parámetro correcto
             DetallePedido dp = new DetallePedido();
             dp.setPedido(pedido);
             dp.setCantidad(det.getCantidad());
             dp.setPrecio_unitario(det.getPrecio());
-            dp.setProducto(det.getNombreProducto());
+
+            // Buscar el producto en BD usando el productoId
+            Producto producto = productoRepository.findById(det.getProductoId())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+            dp.setProducto(producto);
 
             total += det.getCantidad() * det.getPrecio();
             pedido.getDetalles().add(dp);
         }
-
-        pedido.setTotal(total);
-
-        return pedidoRepository.save(pedido);
+        return total;
     }
 }

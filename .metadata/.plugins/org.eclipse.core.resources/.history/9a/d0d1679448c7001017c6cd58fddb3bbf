@@ -1,0 +1,84 @@
+package com.proyecto.lafrance.service;
+
+import com.proyecto.lafrance.dto.DireccionDTO;
+import com.proyecto.lafrance.dto.PedidoRequest;
+import com.proyecto.lafrance.model.Direccion;
+import com.proyecto.lafrance.model.DetallePedido;
+import com.proyecto.lafrance.model.Pedido;
+import com.proyecto.lafrance.model.Usuario;
+import com.proyecto.lafrance.repository.DireccionRepository;
+import com.proyecto.lafrance.repository.PedidoRepository;
+import com.proyecto.lafrance.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+
+@Service
+public class PedidoService {
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private DireccionRepository direccionRepository;
+
+    // ------------------------------------------------------------
+    // GUARDAR DIRECCIÓN
+    // ------------------------------------------------------------
+    public Direccion guardarDireccion(String correo, DireccionDTO dto) {
+
+        Usuario usuario = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Direccion direccion = new Direccion();
+        direccion.setUsuario(usuario);
+        direccion.setDireccion(dto.getDireccion());
+        direccion.setReferencia(dto.getReferencia());
+        direccion.setLat(dto.getLat());
+        direccion.setLng(dto.getLng());
+
+        return direccionRepository.save(direccion);
+    }
+
+    // ------------------------------------------------------------
+    // CONFIRMAR PEDIDO
+    // ------------------------------------------------------------
+    public Pedido confirmarPedido(PedidoRequest req, String correo) {
+
+        Usuario usuario = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Direccion direccion = direccionRepository.findById(req.getDireccionId())
+                .orElseThrow(() -> new RuntimeException("Dirección no encontrada"));
+
+        Pedido pedido = new Pedido();
+        pedido.setUsuario(usuario);
+        pedido.setDireccion(direccion);
+        pedido.setFecha_pedido(LocalDate.now());
+        pedido.setEstado("Pendiente");
+        pedido.setMetodoPago(req.getMetodoPago());
+
+        double total = 0;
+
+        for (PedidoRequest.ItemPedido item : req.getItems()) {
+
+            DetallePedido dp = new DetallePedido();
+            dp.setPedido(pedido);
+            dp.setProductoId(item.productoId);
+            dp.setCantidad(item.cantidad);
+            dp.setPrecio_unitario(item.precio);
+
+            total += item.cantidad * item.precio;
+
+            pedido.getDetalles().add(dp);
+        }
+
+        pedido.setTotal(total);
+
+        return pedidoRepository.save(pedido);
+    }
+}

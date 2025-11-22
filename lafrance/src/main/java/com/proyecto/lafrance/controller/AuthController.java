@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -32,11 +31,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        Usuario usuario = usuarioRepository.findByCorreo(request.getCorreo());
-
-        if (usuario == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
-        }
+        // ✅ Manejo correcto de Optional
+        Usuario usuario = usuarioRepository.findByCorreo(request.getCorreo())
+                .orElseThrow(() -> new RuntimeException("Credenciales inválidas"));
 
         String contrasenaIngresada = request.getContrasena();
         String contrasenaGuardada = usuario.getContrasena();
@@ -71,6 +68,4 @@ public class AuthController {
                 "nombre", usuario.getNombre()
         ));
     }
-
-
 }

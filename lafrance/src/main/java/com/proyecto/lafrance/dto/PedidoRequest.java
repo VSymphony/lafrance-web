@@ -1,9 +1,7 @@
 package com.proyecto.lafrance.dto;
 
-import lombok.Data;
 import java.util.List;
 
-@Data
 public class PedidoRequest {
 
     private String direccion;
