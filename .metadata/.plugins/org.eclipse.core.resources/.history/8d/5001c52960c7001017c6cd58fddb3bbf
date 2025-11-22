@@ -1,0 +1,134 @@
+package com.proyecto.lafrance.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.proyecto.lafrance.dto.DireccionDTO;
+import com.proyecto.lafrance.dto.PedidoRequest;
+import com.proyecto.lafrance.dto.DetalleDTO;
+import com.proyecto.lafrance.model.DetallePedido;
+import com.proyecto.lafrance.model.Pedido;
+import com.proyecto.lafrance.model.Producto;
+import com.proyecto.lafrance.model.Usuario;
+import com.proyecto.lafrance.repository.PedidoRepository;
+import com.proyecto.lafrance.repository.ProductoRepository;
+import com.proyecto.lafrance.repository.UsuarioRepository;
+
+@Service
+public class PedidoService {
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    // -----------------------------
+    //   1) Crear pedido (carrito)
+    // -----------------------------
+    public Pedido crearPedidoDesdeRequest(Usuario usuario, PedidoRequest req) {
+
+        Pedido pedido = new Pedido();
+        pedido.setUsuario(usuario);
+        pedido.setFecha_pedido(LocalDate.now());
+        pedido.setEstado("CARRITO");
+
+        // IMPORTANTE: inicializar lista antes de agregar
+        pedido.setDetalles(new ArrayList<>());
+
+        double total = agregarDetalles(pedido, req.getDetalles());
+        pedido.setTotal(total);
+
+        return pedidoRepository.save(pedido);
+    }
+
+    // -----------------------------
+    //   2) Confirmar pedido final
+    // -----------------------------
+    public Pedido confirmarPedido(String correo, PedidoRequest req) {
+
+        Usuario usuario = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Pedido pedido = new Pedido();
+        pedido.setUsuario(usuario);
+        pedido.setFecha_pedido(LocalDate.now());
+        pedido.setEstado("PENDIENTE");
+
+        pedido.setDireccion(req.getDireccion());
+        pedido.setReferencia(req.getReferencia());
+        pedido.setLat(req.getLat());
+        pedido.setLng(req.getLng());
+
+        pedido.setDetalles(new ArrayList<>());
+
+        double total = agregarDetalles(pedido, req.getDetalles());
+        pedido.setTotal(total);
+
+        return pedidoRepository.save(pedido);
+    }
+
+    // -----------------------------
+    //   Método común para detalles
+    // -----------------------------
+    private double agregarDetalles(Pedido pedido, List<DetalleDTO> detallesDTO) {
+
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (DetalleDTO det : detallesDTO) {
+
+            Producto producto = productoRepository.findById(det.getProductoId())
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + det.getProductoId()));
+
+            DetallePedido dp = new DetallePedido();
+            dp.setPedido(pedido);
+            dp.setProducto(producto);
+            dp.setCantidad(det.getCantidad());
+
+            // ✔ Precio real desde la BD
+            dp.setPrecio_unitario(producto.getPrecio());
+
+            // ✔ Calcular subtotal: precio BD * cantidad
+            BigDecimal subTotal = producto.getPrecio()
+                    .multiply(BigDecimal.valueOf(det.getCantidad()));
+
+            total = total.add(subTotal);
+
+            pedido.getDetalles().add(dp);
+        }
+
+        return total.doubleValue(); // ✔ Convertir de BigDecimal a double
+    }
+
+
+    // -----------------------------
+    //   3) Guardar dirección
+    // -----------------------------
+    public void guardarDireccion(String correo, DireccionDTO dto) {
+
+        Usuario usuario = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        usuario.setDireccion(dto.getDireccion());
+        usuario.setReferencia(dto.getReferencia());
+        usuario.setLat(dto.getLat());
+        usuario.setLng(dto.getLng());
+
+        usuarioRepository.save(usuario);
+    }
+
+	public Usuario obtenerUsuarioPorCorreo(String correo) {
+		return usuarioRepository.findByCorreo(correo)
+                .orElse(null);
+	}
+
+}
+

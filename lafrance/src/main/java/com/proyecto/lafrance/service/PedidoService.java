@@ -3,9 +3,10 @@ package com.proyecto.lafrance.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.proyecto.lafrance.dto.DireccionDTO;
 import com.proyecto.lafrance.dto.PedidoRequest;
@@ -21,7 +22,8 @@ import com.proyecto.lafrance.repository.UsuarioRepository;
 @Service
 public class PedidoService {
 
-    private final PedidoRepository pedidoRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -29,16 +31,18 @@ public class PedidoService {
     @Autowired
     private ProductoRepository productoRepository;
 
-    public PedidoService(PedidoRepository pedidoRepository) {
-        this.pedidoRepository = pedidoRepository;
-    }
-
-    // Paso 1: Crear pedido desde el carrito
+    // -----------------------------
+    //   1) Crear pedido (carrito)
+    // -----------------------------
     public Pedido crearPedidoDesdeRequest(Usuario usuario, PedidoRequest req) {
+
         Pedido pedido = new Pedido();
         pedido.setUsuario(usuario);
         pedido.setFecha_pedido(LocalDate.now());
-        pedido.setEstado("Carrito");
+        pedido.setEstado("CARRITO");
+
+        // IMPORTANTE: inicializar lista antes de agregar
+        pedido.setDetalles(new ArrayList<>());
 
         double total = agregarDetalles(pedido, req.getDetalles());
         pedido.setTotal(total);
@@ -46,19 +50,25 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    // Paso 2: Confirmar pedido
+    // -----------------------------
+    //   2) Confirmar pedido final
+    // -----------------------------
     public Pedido confirmarPedido(String correo, PedidoRequest req) {
+
         Usuario usuario = usuarioRepository.findByCorreo(correo)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         Pedido pedido = new Pedido();
         pedido.setUsuario(usuario);
         pedido.setFecha_pedido(LocalDate.now());
-        pedido.setEstado("Pendiente");
+        pedido.setEstado("PENDIENTE");
+
         pedido.setDireccion(req.getDireccion());
         pedido.setReferencia(req.getReferencia());
         pedido.setLat(req.getLat());
         pedido.setLng(req.getLng());
+
+        pedido.setDetalles(new ArrayList<>());
 
         double total = agregarDetalles(pedido, req.getDetalles());
         pedido.setTotal(total);
@@ -66,22 +76,61 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    private double agregarDetalles(Pedido pedido, List<DetalleDTO> detalles) {
-        double total = 0;
-        for (DetalleDTO det : detalles) {   // ✅ usar el parámetro correcto
+    // -----------------------------
+    //   Método común para detalles
+    // -----------------------------
+    private double agregarDetalles(Pedido pedido, List<DetalleDTO> detallesDTO) {
+
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (DetalleDTO det : detallesDTO) {
+
+            Producto producto = productoRepository.findById(det.getProductoId())
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + det.getProductoId()));
+
             DetallePedido dp = new DetallePedido();
             dp.setPedido(pedido);
-            dp.setCantidad(det.getCantidad());
-            dp.setPrecio_unitario(det.getPrecio());
-
-            // Buscar el producto en BD usando el productoId
-            Producto producto = productoRepository.findById(det.getProductoId())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
             dp.setProducto(producto);
+            dp.setCantidad(det.getCantidad());
 
-            total += det.getCantidad() * det.getPrecio();
+            // ✔ Precio real desde la BD
+            dp.setPrecio_unitario(producto.getPrecio());
+
+            // ✔ Calcular subtotal: precio BD * cantidad
+            BigDecimal subTotal = producto.getPrecio()
+                    .multiply(BigDecimal.valueOf(det.getCantidad()));
+
+            total = total.add(subTotal);
+
             pedido.getDetalles().add(dp);
         }
-        return total;
+
+        return total.doubleValue(); // ✔ Convertir de BigDecimal a double
     }
+
+
+    // -----------------------------
+	//  3) Guardar dirección
+	//-----------------------------
+    public void guardarDireccion(String correo, DireccionDTO dto) {
+
+        Usuario usuario = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Pedido pedido = pedidoRepository.findByUsuarioAndEstado(usuario, "CARRITO")
+                .orElseThrow(() -> new RuntimeException("No hay pedido en el carrito"));
+
+        pedido.setDireccion(dto.getDireccion());
+        pedido.setReferencia(dto.getReferencia());
+        pedido.setLat(dto.getLat());
+        pedido.setLng(dto.getLng());
+
+        pedidoRepository.save(pedido);
+    }
+    
+    public Usuario obtenerUsuarioPorCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo).orElse(null);
+    }
+
 }
+

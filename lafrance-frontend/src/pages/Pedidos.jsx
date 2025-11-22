@@ -47,36 +47,52 @@ const quitarDelCarrito = (id) => {
 
   // 🔹 Confirmar pedido
   const confirmarPedido = async () => {
-    if (!usuarioId) {
-      setMensaje("⚠️ Debes iniciar sesión para hacer un pedido.");
-      return;
-    }
+  if (!usuarioId) {
+    setMensaje("⚠️ Debes iniciar sesión para hacer un pedido.");
+    return;
+  }
 
-    if (carrito.length === 0) {
-      setMensaje("Tu carrito está vacío 🛒");
-      return;
-    }
+  if (carrito.length === 0) {
+    setMensaje("Tu carrito está vacío 🛒");
+    return;
+  }
 
-    try {
-      const pedido = {
-        fecha_pedido: new Date().toISOString().slice(0, 10),
-        estado: "PENDIENTE",
-        total,
-        detalles: carrito.map((item) => ({
-          menu_id: item.id,
-          cantidad: item.cantidad,
-          subtotal: item.precio * item.cantidad,
-        })),
-        usuario_id: Number(usuarioId),
-      };
+  try {
+    const token = localStorage.getItem("token");
 
-      await axios.post("http://localhost:8070/api/pedidos", pedido);
-      setMensaje("✅ Pedido realizado con éxito");
-      setCarrito([]);
-    } catch {
-      setMensaje("❌ Error al enviar el pedido");
-    }
-  };
+    const pedido = {
+      fecha_pedido: new Date().toISOString().slice(0, 10),
+      estado: "PENDIENTE",
+      total,
+      detalles: carrito.map((item) => ({
+        productoId: item.id,
+        cantidad: item.cantidad,
+        subtotal: item.precio * item.cantidad,
+      })),
+      usuario_id: Number(usuarioId),
+    };
+
+    await axios.post(
+      "http://localhost:8070/api/pedidos",
+      pedido,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      }
+    );
+
+    setMensaje("✅ Pedido realizado con éxito");
+    setCarrito([]);
+    localStorage.removeItem("carrito");
+
+  } catch (error) {
+    console.error(error);
+    setMensaje("❌ Error al enviar el pedido");
+  }
+};
+
 
   return (
     <MainLayout>

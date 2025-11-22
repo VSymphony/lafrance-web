@@ -49,28 +49,30 @@ public class UsuarioController {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<Usuario> registrarUsuario(@RequestBody Usuario nuevoUsuario) {
+    public ResponseEntity<?> registrarUsuario(@RequestBody Usuario nuevoUsuario) {
         try {
-        	String contrasenaEncriptada = passwordEncoder.encode(nuevoUsuario.getContrasena());
-        	nuevoUsuario.setContrasena(contrasenaEncriptada);
-            usuarioRepository.save(nuevoUsuario);
             // Verificar si el correo ya existe
             if (usuarioRepository.findByCorreo(nuevoUsuario.getCorreo()).isPresent()) {
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.badRequest().body("El correo ya está registrado");
             }
 
+            // Encriptar contraseña
+            String contrasenaEncriptada = passwordEncoder.encode(nuevoUsuario.getContrasena());
+            nuevoUsuario.setContrasena(contrasenaEncriptada);
+
+            // Asignar rol por defecto CLIENTE
             Rol rolCliente = rolRepository.findByNombre("CLIENTE")
                     .orElseThrow(() -> new RuntimeException("Rol CLIENTE no encontrado"));
-
             nuevoUsuario.setRol(rolCliente);
 
+            // Guardar usuario
             Usuario guardado = usuarioRepository.save(nuevoUsuario);
+
             return ResponseEntity.ok(guardado);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body("Error al registrar usuario");
         }
     }
-
 }

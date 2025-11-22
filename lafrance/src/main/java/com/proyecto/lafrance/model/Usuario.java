@@ -11,8 +11,8 @@ public class Usuario {
 
     private String nombre;
     private String correo;
-    private String contrasena;
     private String telefono;
+    private String contrasena;
 
     @ManyToOne
     @JoinColumn(name = "rol_id")
@@ -27,17 +27,14 @@ public class Usuario {
 
     public String getCorreo() { return correo; }
     public void setCorreo(String correo) { this.correo = correo; }
-
-    public String getContrasena() { return contrasena; }
-    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
     
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
 
+    public String getContrasena() { return contrasena; }
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
+    
     public Rol getRol() { return rol; }
     public void setRol(Rol rol) { this.rol = rol; }
-	public boolean isPresent() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 }

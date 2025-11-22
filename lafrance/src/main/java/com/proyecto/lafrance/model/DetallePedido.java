@@ -1,5 +1,7 @@
 package com.proyecto.lafrance.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,7 +13,7 @@ public class DetallePedido {
     private Long id;
 
     private int cantidad;
-    private double precio_unitario;
+    private BigDecimal precio_unitario;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id")
@@ -28,8 +30,8 @@ public class DetallePedido {
     public int getCantidad() { return cantidad; }
     public void setCantidad(int cantidad) { this.cantidad = cantidad; }
 
-    public double getPrecio_unitario() { return precio_unitario; }
-    public void setPrecio_unitario(double precio_unitario) { this.precio_unitario = precio_unitario; }
+    public BigDecimal getPrecio_unitario() { return precio_unitario; }
+    public void setPrecio_unitario(BigDecimal precio_unitario) { this.precio_unitario = precio_unitario; }
 
     public Pedido getPedido() { return pedido; }
     public void setPedido(Pedido pedido) { this.pedido = pedido; }

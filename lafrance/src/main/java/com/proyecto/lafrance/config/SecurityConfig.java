@@ -27,12 +27,12 @@ public class SecurityConfig {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                        "/api/auth/**",
-                        "/api/pedidos/guardarDireccion"
-                ).permitAll()
-                .requestMatchers("/api/pedidos/confirmar").authenticated()
-                .anyRequest().permitAll()
+                    .requestMatchers(
+                            "/api/auth/**",
+                            "/api/pedidos/guardarDireccion"
+                    ).permitAll()
+                    .requestMatchers("/api/pedidos/**").authenticated()
+                    .anyRequest().permitAll()
             )
             // ⬇️ REGISTRAR FILTRO JWT ANTES DE USERNAMEPASSWORDAUTHFILTER
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

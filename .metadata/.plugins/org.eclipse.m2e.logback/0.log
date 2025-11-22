@@ -1246,3 +1246,60 @@
 2025-11-21 22:09:44,312 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
 2025-11-21 22:09:44,314 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
 2025-11-21 22:15:49,518 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 22:15:49,521 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 22:15:49,523 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 22:39:05,145 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 22:39:05,148 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 22:39:05,150 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 22:39:48,737 [Worker-15: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 22:39:48,742 [Worker-15: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 22:39:48,746 [Worker-15: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 22:42:00,643 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 22:42:00,646 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 22:42:00,650 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 22:54:21,678 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 22:54:21,682 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 22:54:21,685 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 23:08:04,425 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 23:08:04,432 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 23:08:04,436 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 23:24:49,516 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 23:24:49,530 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 23:24:49,533 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 23:27:30,902 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 23:27:30,906 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 23:27:30,908 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 23:34:14,647 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 23:34:14,650 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 23:34:14,652 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 23:43:53,418 [Worker-0: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 23:43:53,422 [Worker-0: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 23:43:53,426 [Worker-0: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 23:51:08,898 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 23:51:08,901 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 23:51:08,903 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 23:52:30,331 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 23:52:30,332 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 23:52:30,335 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 23:52:49,156 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 23:52:49,158 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 23:52:49,160 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-21 23:54:50,182 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-21 23:54:50,185 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-21 23:54:50,188 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-22 00:00:28,235 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-22 00:00:28,237 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-22 00:00:28,240 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-22 00:08:45,589 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-22 00:08:45,592 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-22 00:08:45,595 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-22 00:11:11,322 [Worker-7: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-22 00:11:11,325 [Worker-7: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-22 00:11:11,327 [Worker-7: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-22 00:12:22,375 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-22 00:12:22,378 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-22 00:12:22,380 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources
+2025-11-22 00:12:37,003 [Worker-6: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2025-11-22 00:12:53,261 [Worker-15: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-22 00:12:53,273 [Worker-15: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-11-22 00:12:53,280 [Worker-15: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\lafrance\src\test\resources

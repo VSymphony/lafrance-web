@@ -1,13 +1,12 @@
 package com.proyecto.lafrance.dto;
 
-import lombok.Data;
-
-@Data
 public class DireccionDTO {
     private String direccion;
     private String referencia;
     private Double lat;
     private Double lng;
+    
+    
 	public String getDireccion() {
 		return direccion;
 	}
