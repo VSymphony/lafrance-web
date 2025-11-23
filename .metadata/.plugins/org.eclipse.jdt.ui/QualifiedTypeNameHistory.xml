@@ -45,4 +45,6 @@
     <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.ProductoRepository"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestHeader"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.PedidoResponse"/>
+    <fullyQualifiedTypeName name="java.nio.charset.StandardCharsets"/>
 </qualifiedTypeNameHistroy>

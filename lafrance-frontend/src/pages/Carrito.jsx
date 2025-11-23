@@ -6,7 +6,9 @@ export default function Carrito() {
     JSON.parse(localStorage.getItem("carrito")) || []
   );
 
-  const direccionGuardada = JSON.parse(localStorage.getItem("direccionCliente"));
+  const [direccionGuardada, setDireccionGuardada] = useState(
+    JSON.parse(localStorage.getItem("direccionCliente")) || null
+  );
 
   const quitarDelCarrito = (id) => {
     const actualizado = carrito.filter((p) => p.id !== id);
@@ -17,59 +19,71 @@ export default function Carrito() {
   const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
 
   const confirmarPedido = async () => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  if (!direccionGuardada) {
-    alert("Debes seleccionar una dirección.");
-    return;
-  }
-
-  if (carrito.length === 0) {
-    alert("El carrito está vacío.");
-    return;
-  }
-
-  const pedido = {
-    direccion: direccionGuardada,
-    total,
-    items: carrito.map(item => ({
-      productoId: item.id,
-      cantidad: item.cantidad
-    }))
-  };
-
-  try {
-    const res = await fetch("http://localhost:8070/api/pedidos/confirmar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify(pedido)
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert("Error al confirmar pedido: " + data.message);
+    if (!token) {
+      alert("Debes iniciar sesión para confirmar el pedido.");
       return;
     }
 
-    alert("Pedido confirmado con éxito 🎉");
+    if (!direccionGuardada) {
+      alert("Debes seleccionar una dirección.");
+      return;
+    }
 
-    // Vaciar carrito
-    localStorage.removeItem("carrito");
-    localStorage.removeItem("direccionCliente");
+    if (carrito.length === 0) {
+      alert("El carrito está vacío.");
+      return;
+    }
 
-    // Redirigir a historial de pedidos del cliente
-    window.location.href = "/pedidos";
+    const pedido = {
+      direccion: direccionGuardada.direccion,
+      lat: direccionGuardada.lat,
+      lng: direccionGuardada.lng,
+      total,
+      detalles: carrito.map((item) => ({
+        productoId: item.id,
+        cantidad: item.cantidad,
+      })),
+    };
 
-  } catch (error) {
-    console.error(error);
-    alert("Error de conexión con el servidor.");
-  }
-};
+    try {
+      const res = await fetch("http://localhost:8070/api/pedidos/confirmar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(pedido),
+      });
 
+      let data = null;
+      try {
+        data = await res.json(); // ✅ siempre JSON gracias al DTO PedidoResponse
+      } catch {
+        data = { message: "Respuesta vacía del servidor", pedidoId: null };
+      }
+
+      if (!res.ok) {
+        alert("Error al confirmar pedido: " + data.message);
+        return;
+      }
+
+      alert(data.message + " 🎉 (ID: " + data.pedidoId + ")");
+
+      // Vaciar carrito y dirección
+      localStorage.removeItem("carrito");
+      localStorage.removeItem("direccionCliente");
+      setCarrito([]);
+      setDireccionGuardada(null);
+
+      // Redirigir a historial de pedidos
+      window.location.href = "/pedidos";
+    } catch (error) {
+      console.error(error);
+      alert("Error de conexión con el servidor.");
+    }
+  };
 
   return (
     <MainLayout>
@@ -100,7 +114,6 @@ export default function Carrito() {
               Total: ${total.toFixed(2)}
             </div>
 
-            {/* 🚨 Mostrar Dirección o Botón para agregarla */}
             {!direccionGuardada ? (
               <button
                 className="btn sello-btn mt-6"

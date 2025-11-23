@@ -131,6 +131,12 @@ public class PedidoService {
     public Usuario obtenerUsuarioPorCorreo(String correo) {
         return usuarioRepository.findByCorreo(correo).orElse(null);
     }
+    
+ // ✅ Nuevo: buscar usuario por ID
+    public Usuario obtenerUsuarioPorId(Long id) {
+        return usuarioRepository.findById(id).orElse(null);
+    }
+
 
 }
 

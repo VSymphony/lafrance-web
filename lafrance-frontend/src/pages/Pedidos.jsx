@@ -1,98 +1,47 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import MainLayout from "../layouts/MainLayout";
 
 export default function Pedidos() {
   const [menu, setMenu] = useState([]);
-  const [carrito, setCarrito] = useState([]);
+  const [carrito, setCarrito] = useState(
+    JSON.parse(localStorage.getItem("carrito")) || []
+  );
   const [mensaje, setMensaje] = useState("");
 
-  const usuarioId = localStorage.getItem("usuarioId");
-
-  // 🔹 Cargar menú
+  // 🔹 Cargar menú desde API
   useEffect(() => {
-    axios
-      .get("http://localhost:8070/api/menu")
-      .then((res) => setMenu(res.data))
+    fetch("http://localhost:8070/api/menu")
+      .then(res => res.json())
+      .then(data => setMenu(data))
       .catch(() => setMensaje("Error al cargar el menú 😢"));
   }, []);
 
   // 🔹 Agregar producto al carrito
-const agregarAlCarrito = (item) => {
-  const existente = carrito.find((p) => p.id === item.id);
+  const agregarAlCarrito = (item) => {
+    const existente = carrito.find(p => p.id === item.id);
+    let nuevoCarrito;
 
-  let nuevoCarrito;
-  if (existente) {
-    nuevoCarrito = carrito.map((p) =>
-      p.id === item.id ? { ...p, cantidad: p.cantidad + 1 } : p
-    );
-  } else {
-    nuevoCarrito = [...carrito, { ...item, cantidad: 1 }];
-  }
+    if (existente) {
+      nuevoCarrito = carrito.map(p =>
+        p.id === item.id ? { ...p, cantidad: p.cantidad + 1 } : p
+      );
+    } else {
+      nuevoCarrito = [...carrito, { ...item, cantidad: 1 }];
+    }
 
-  setCarrito(nuevoCarrito);
-  localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
-};
+    setCarrito(nuevoCarrito);
+    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+    setMensaje(`${item.nombre} agregado al carrito ✅`);
+  };
 
-// 🔹 Quitar producto del carrito
-const quitarDelCarrito = (id) => {
-  const nuevoCarrito = carrito.filter((p) => p.id !== id);
-  setCarrito(nuevoCarrito);
-  localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
-};
+  // 🔹 Quitar producto del carrito
+  const quitarDelCarrito = (id) => {
+    const nuevoCarrito = carrito.filter(p => p.id !== id);
+    setCarrito(nuevoCarrito);
+    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+  };
 
-
-  // 🔹 Calcular total
   const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
-
-  // 🔹 Confirmar pedido
-  const confirmarPedido = async () => {
-  if (!usuarioId) {
-    setMensaje("⚠️ Debes iniciar sesión para hacer un pedido.");
-    return;
-  }
-
-  if (carrito.length === 0) {
-    setMensaje("Tu carrito está vacío 🛒");
-    return;
-  }
-
-  try {
-    const token = localStorage.getItem("token");
-
-    const pedido = {
-      fecha_pedido: new Date().toISOString().slice(0, 10),
-      estado: "PENDIENTE",
-      total,
-      detalles: carrito.map((item) => ({
-        productoId: item.id,
-        cantidad: item.cantidad,
-        subtotal: item.precio * item.cantidad,
-      })),
-      usuario_id: Number(usuarioId),
-    };
-
-    await axios.post(
-      "http://localhost:8070/api/pedidos",
-      pedido,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        }
-      }
-    );
-
-    setMensaje("✅ Pedido realizado con éxito");
-    setCarrito([]);
-    localStorage.removeItem("carrito");
-
-  } catch (error) {
-    console.error(error);
-    setMensaje("❌ Error al enviar el pedido");
-  }
-};
-
 
   return (
     <MainLayout>
@@ -101,9 +50,9 @@ const quitarDelCarrito = (id) => {
           Hacer un Pedido
         </h2>
 
-        {/* Menú - 3 columnas */}
+        {/* Menú */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {menu.map((item) => (
+          {menu.map(item => (
             <div
               key={item.id}
               className="bg-[#fffdf5] border border-[#e3d4a5] rounded-2xl shadow-md p-5 flex flex-col items-center text-center transition transform hover:scale-105 hover:shadow-lg"
@@ -138,7 +87,7 @@ const quitarDelCarrito = (id) => {
             <p className="text-gray-600 text-center">Tu carrito está vacío</p>
           ) : (
             <div className="space-y-3">
-              {carrito.map((p) => (
+              {carrito.map(p => (
                 <div
                   key={p.id}
                   className="flex justify-between items-center bg-white border border-[#e3d4a5] p-3 rounded-lg shadow-sm"
@@ -147,7 +96,7 @@ const quitarDelCarrito = (id) => {
                     {p.nombre} x {p.cantidad}
                   </span>
                   <span className="text-[#a47528] font-semibold">
-                    ${ (p.precio * p.cantidad).toFixed(2) }
+                    ${(p.precio * p.cantidad).toFixed(2)}
                   </span>
                   <button
                     onClick={() => quitarDelCarrito(p.id)}
@@ -163,10 +112,10 @@ const quitarDelCarrito = (id) => {
               </div>
 
               <button
-                onClick={confirmarPedido}
+                onClick={() => (window.location.href = "/carrito")}
                 className="sello-btn w-full mt-6"
               >
-                Confirmar Pedido
+                Ir al Carrito
               </button>
             </div>
           )}

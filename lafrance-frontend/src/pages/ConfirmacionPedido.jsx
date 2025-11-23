@@ -4,17 +4,18 @@ import { useNavigate } from "react-router-dom";
 
 export default function ConfirmacionPedido() {
   const { cart, direccion } = useCart();
-  const { user } = useAuth();
+const { user } = useAuth(); // info del usuario
   const navigate = useNavigate();
 
   const total = cart.reduce((sum, p) => sum + p.precio * p.cantidad, 0);
 
   const enviarPedido = async () => {
+  try {
     const res = await fetch("http://localhost:8070/api/pedidos", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("token")
+        "Authorization": "Bearer " + localStorage.getItem("token"),
       },
       body: JSON.stringify({
         clienteId: user.id,
@@ -24,12 +25,20 @@ export default function ConfirmacionPedido() {
       }),
     });
 
-    if (res.ok) {
-      navigate("/pedido-finalizado");
-    } else {
-      alert("Hubo un problema al procesar el pedido.");
+    const data = await res.json(); // ✅ siempre JSON gracias al DTO PedidoResponse
+
+    if (!res.ok) {
+      alert("Error al procesar el pedido: " + data.message);
+      return;
     }
-  };
+
+    alert(data.message + " 🎉 (ID: " + data.pedidoId + ")");
+    navigate("/pedido-finalizado");
+  } catch (error) {
+    console.error(error);
+    alert("Error de conexión con el servidor.");
+  }
+};
 
   return (
     <div className="p-5">

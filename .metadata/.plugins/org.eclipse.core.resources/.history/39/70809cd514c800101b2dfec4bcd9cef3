@@ -1,0 +1,19 @@
+package com.proyecto.lafrance.dto;
+
+public class PedidoResponse {
+    private String message;
+    private Long pedidoId;
+
+    public PedidoResponse(String message, Long pedidoId) {
+        this.message = message;
+        this.pedidoId = pedidoId;
+    }
+
+	public String getMessage() {
+        return message;
+    }
+
+    public Long getPedidoId() {
+        return pedidoId;
+    }
+}

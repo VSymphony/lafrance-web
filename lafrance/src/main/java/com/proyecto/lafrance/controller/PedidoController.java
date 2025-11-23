@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.lafrance.dto.DireccionDTO;
 import com.proyecto.lafrance.dto.PedidoRequest;
+import com.proyecto.lafrance.dto.PedidoResponse;
 import com.proyecto.lafrance.model.Pedido;
 import com.proyecto.lafrance.model.Usuario;
 import com.proyecto.lafrance.repository.PedidoRepository;
@@ -37,82 +38,82 @@ public class PedidoController {
 
     // ✅ Crear pedido en carrito
     @PostMapping
-    public ResponseEntity<?> crearPedido(
+    public ResponseEntity<PedidoResponse> crearPedido(
             @RequestBody PedidoRequest request,
             @RequestHeader(value = "Authorization", required = false) String auth) {
 
         Usuario usuario = null;
 
-        // Si viene token, procesarlo
         if (auth != null && auth.startsWith("Bearer ")) {
             String token = auth.substring(7);
-
             if (jwtUtil.validarToken(token)) {
                 String correo = jwtUtil.obtenerCorreo(token);
                 usuario = pedidoService.obtenerUsuarioPorCorreo(correo);
             }
         }
 
-        // Crear el pedido SIN exigir usuario  
         Pedido pedido = pedidoService.crearPedidoDesdeRequest(usuario, request);
 
-        return ResponseEntity.ok(Map.of(
-                "message", "Pedido creado en carrito",
-                "pedidoId", pedido.getId()
-        ));
+        return ResponseEntity.ok(new PedidoResponse("Pedido creado en carrito", pedido.getId()));
     }
-
 
     // ✅ Guardar dirección
     @PostMapping("/guardarDireccion")
-    public ResponseEntity<?> guardarDireccion(
+    public ResponseEntity<PedidoResponse> guardarDireccion(
             @RequestBody DireccionDTO dto,
             @RequestHeader("Authorization") String auth) {
 
         if (auth == null || !auth.startsWith("Bearer ")) {
-            return ResponseEntity.status(401).body("Token no proporcionado");
+            return ResponseEntity.status(401).body(new PedidoResponse("Token no proporcionado", null));
         }
 
         String token = auth.substring(7);
 
         if (!jwtUtil.validarToken(token)) {
-            return ResponseEntity.status(401).body("Token inválido");
+            return ResponseEntity.status(401).body(new PedidoResponse("Token inválido", null));
         }
 
         String correo = jwtUtil.obtenerCorreo(token);
         pedidoService.guardarDireccion(correo, dto);
 
-        return ResponseEntity.ok(Map.of("message", "Dirección guardada"));
+        return ResponseEntity.ok(new PedidoResponse("Dirección guardada", null));
     }
 
     // ✅ Confirmar pedido
     @PostMapping("/confirmar")
-    public ResponseEntity<?> confirmarPedido(
+    public ResponseEntity<PedidoResponse> confirmarPedido(
             @RequestBody PedidoRequest request,
-            @RequestHeader("Authorization") String auth) {
+            @RequestHeader(value = "Authorization", required = false) String auth) {
 
         if (auth == null || !auth.startsWith("Bearer ")) {
-            return ResponseEntity.status(401).body("Token no proporcionado");
+            return ResponseEntity.status(401)
+                    .body(new PedidoResponse("Token no proporcionado", null));
         }
 
         String token = auth.substring(7);
 
         if (!jwtUtil.validarToken(token)) {
-            return ResponseEntity.status(401).body("Token inválido");
+            return ResponseEntity.status(401)
+                    .body(new PedidoResponse("Token inválido", null));
         }
 
+        // ✅ Ahora puedes obtener más datos del usuario directamente del token
+        Long usuarioId = jwtUtil.obtenerId(token);
+        String nombre = jwtUtil.obtenerNombre(token);
         String correo = jwtUtil.obtenerCorreo(token);
-        Usuario usuario = pedidoService.obtenerUsuarioPorCorreo(correo);
+        String rol = jwtUtil.obtenerRol(token);
+
+        Usuario usuario = pedidoService.obtenerUsuarioPorId(usuarioId);
 
         if (usuario == null) {
-            return ResponseEntity.status(401).body("Usuario no encontrado");
+            return ResponseEntity.status(401)
+                    .body(new PedidoResponse("Usuario no encontrado", null));
         }
 
         Pedido pedido = pedidoService.confirmarPedido(correo, request);
 
-        return ResponseEntity.ok(Map.of(
-                "message", "Pedido confirmado",
-                "pedidoId", pedido.getId()
-        ));
+        return ResponseEntity.ok(
+                new PedidoResponse("Pedido confirmado para " + nombre, pedido.getId())
+        );
     }
 }
