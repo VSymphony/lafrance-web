@@ -10,6 +10,7 @@ import ClienteDashboard from "./pages/ClienteDashboard";
 import AdminCategorias from "./pages/AdminCategorias";
 import AdminProductos from "./pages/AdminProductos";
 import AdminReservas from "./pages/AdminReservas";
+import AdminPedidos from "./pages/AdminPedidos";
 import ClienteReservas from "./pages/ClienteReservas";
 import Register from "./pages/Register";
 import Carrito from "./pages/Carrito";
@@ -108,6 +109,14 @@ export default function App() {
             element={
               <PrivateRoute role="ADMIN">
                 <AdminReservas />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/pedidos"
+            element={
+              <PrivateRoute role="ADMIN">
+                <AdminPedidos />
               </PrivateRoute>
             }
           />
