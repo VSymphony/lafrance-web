@@ -24,7 +24,7 @@ public class AuthService {
                 .claim("nombre", usuario.getNombre())
                 .claim("rol", usuario.getRol().getNombre())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // 1 hora
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 horas
                 .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }

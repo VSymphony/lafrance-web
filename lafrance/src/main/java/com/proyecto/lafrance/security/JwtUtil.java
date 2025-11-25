@@ -2,6 +2,8 @@ package com.proyecto.lafrance.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -13,9 +15,9 @@ import com.proyecto.lafrance.model.Usuario;
 @Component
 public class JwtUtil {
 
-	private static final String SECRET_KEY = "clave-super-segura-y-larga-para-el-jwt-la-france-2025";
-	private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // ✅ 24 horas
+	private static final String SECRET_KEY_STRING = "claveSeguraParaJWT12345678901234567890";
+    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY_STRING.getBytes(StandardCharsets.UTF_8));
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24 horas
 
 
     // ✅ Generar token con más claims

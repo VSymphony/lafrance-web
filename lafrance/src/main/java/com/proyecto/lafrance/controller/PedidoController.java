@@ -67,8 +67,9 @@ public class PedidoController {
             return ResponseEntity.status(401).body(new PedidoResponse("Token no proporcionado", null));
         }
 
-        String token = auth.substring(7);
-
+        String rawToken = auth.substring(7);
+        String token = rawToken.replaceAll("\\s+", "").trim();
+        
         if (!jwtUtil.validarToken(token)) {
             return ResponseEntity.status(401).body(new PedidoResponse("Token inválido", null));
         }
