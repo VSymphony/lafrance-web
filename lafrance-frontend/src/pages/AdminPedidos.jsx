@@ -11,7 +11,7 @@ export default function AdminPedidos() {
       try {
         const res = await fetch("http://localhost:8070/api/pedidos");
         const data = await res.json();
-        setPedidos(data.data || []); // ✅ usa el array correcto
+        setPedidos(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error cargando pedidos:", error);
       } finally {

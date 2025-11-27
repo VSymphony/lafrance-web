@@ -1,3 +1,2 @@
-2025/11/22-20:34:58.805 614c Reusing MANIFEST C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
-2025/11/22-20:34:58.812 614c Recovering log #3
-2025/11/22-20:34:58.813 614c Reusing old log C:\Sistema_de_Reservas_y_Pedidos_en_Línea\PROYECTO_LaFrance\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/000003.log 
+2025/11/26-15:39:42.768 5d84 Creating DB C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb since it was missing.
+2025/11/26-15:39:42.788 5d84 Reusing MANIFEST C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001

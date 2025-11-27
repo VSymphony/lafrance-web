@@ -31,7 +31,9 @@ public class SecurityConfig {
                             "/api/auth/**",
                             "/api/pedidos/guardarDireccion"
                     ).permitAll()
-                    .requestMatchers("/api/pedidos/**").authenticated()
+                    .requestMatchers("/api/pedidos/confirmar").permitAll()
+                    .requestMatchers("/api/pedidos/**").hasAnyAuthority("ADMIN", "CLIENTE")
+                    //.requestMatchers("/api/pedidos/**").authenticated()
                     .anyRequest().permitAll()
             )
             // ⬇️ REGISTRAR FILTRO JWT ANTES DE USERNAMEPASSWORDAUTHFILTER
