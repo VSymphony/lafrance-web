@@ -79,21 +79,6 @@ export default function Navbar() {
             </>
           )}
 
-          {/* 👑 Menú Admin */}
-          {isLoggedIn && userRole === "ADMIN" && (
-            <>
-              <li><Link to="/admin" className="hover:text-[#7a0000] transition">Panel Admin</Link></li>
-              <li>
-                <button
-                  onClick={handleLogout}
-                  className="bg-[#7a0000] hover:bg-[#9b0d0d] text-white px-4 py-1 rounded-xl transition"
-                >
-                  Cerrar sesión
-                </button>
-              </li>
-            </>
-          )}
-
           {/* 🍷 Menú Cliente */}
           {isLoggedIn && userRole === "CLIENTE" && (
             <>

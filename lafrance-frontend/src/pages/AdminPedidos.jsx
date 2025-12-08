@@ -11,7 +11,7 @@ export default function AdminPedidos() {
   const flujoEstados = [
     { estado: "PENDIENTE", label: "Pendiente", color: "bg-gray-300" },
     { estado: "CONFIRMADO", label: "Confirmado", color: "bg-blue-400" },
-    { estado: "EN_CAMINO", label: "En Camino", color: "bg-yellow-500" },
+    { estado: "EN_CAMINO", label: "En_Camino", color: "bg-yellow-500" },
     { estado: "ENTREGADO", label: "Entregado", color: "bg-green-400" },
     { estado: "CANCELADO", label: "Cancelado", color: "bg-red-500" },
   ];

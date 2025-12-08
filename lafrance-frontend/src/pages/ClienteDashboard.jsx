@@ -54,13 +54,13 @@ export default function ClienteDashboard() {
 
           <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
             <h3 className="text-xl font-serif text-[#0a1f44] mb-2">📅 Tus Reservas</h3>
-            <p className="text-gray-600 text-sm mb-4">Consulta o modifica tus próximas reservas en La France.</p>
+            <p className="text-gray-600 text-sm mb-4">Realiza tu próxima reserva en La France.</p>
             <Link to="/reservas" className="text-[#7b1e1e] font-medium hover:underline">Ver reservas</Link>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
             <h3 className="text-xl font-serif text-[#0a1f44] mb-2">🛒 Pedidos Online</h3>
-            <p className="text-gray-600 text-sm mb-4">Haz tu pedido para recoger o recibir en casa.</p>
+            <p className="text-gray-600 text-sm mb-4">Haz tus pedidos y recibelos en la comodidad de tu casa.</p>
             <Link to="/pedidos" className="text-[#7b1e1e] font-medium hover:underline">Hacer pedido</Link>
           </div>
         </div>

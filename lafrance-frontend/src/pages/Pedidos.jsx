@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ React Router
 import MainLayout from "../layouts/MainLayout";
 
 export default function Pedidos() {
+  const navigate = useNavigate();
+
   const [menu, setMenu] = useState([]);
   const [carrito, setCarrito] = useState(
     JSON.parse(localStorage.getItem("carrito")) || []
@@ -15,6 +18,11 @@ export default function Pedidos() {
       .then(data => setMenu(data))
       .catch(() => setMensaje("Error al cargar el menú 😢"));
   }, []);
+
+  // 🔹 Sincronizar carrito con localStorage
+  useEffect(() => {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }, [carrito]);
 
   // 🔹 Agregar producto al carrito
   const agregarAlCarrito = (item) => {
@@ -30,18 +38,27 @@ export default function Pedidos() {
     }
 
     setCarrito(nuevoCarrito);
-    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
     setMensaje(`${item.nombre} agregado al carrito ✅`);
+
+    // Mensaje temporal
+    setTimeout(() => setMensaje(""), 3000);
   };
 
   // 🔹 Quitar producto del carrito
   const quitarDelCarrito = (id) => {
     const nuevoCarrito = carrito.filter(p => p.id !== id);
     setCarrito(nuevoCarrito);
-    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
   };
 
+  // 🔹 Vaciar carrito
+  const vaciarCarrito = () => setCarrito([]);
+
+  // 🔹 Total del carrito
   const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+
+  // 🔹 Formato de precio
+  const formatoPrecio = (valor) =>
+    new Intl.NumberFormat("es-PE", { style: "currency", currency: "PEN" }).format(valor);
 
   return (
     <MainLayout>
@@ -58,14 +75,14 @@ export default function Pedidos() {
               className="bg-[#fffdf5] border border-[#e3d4a5] rounded-2xl shadow-md p-5 flex flex-col items-center text-center transition transform hover:scale-105 hover:shadow-lg"
             >
               <img
-                src={item.imagen || "/placeholder.png"}
+                src={item.imagen_url || "/placeholder.png"}
                 alt={item.nombre}
                 className="h-40 w-full object-cover rounded-lg mb-3"
               />
               <h3 className="font-bold text-[#3e2f1c] text-lg">{item.nombre}</h3>
               <p className="text-gray-600 text-sm mb-2">{item.descripcion}</p>
               <p className="text-[#a47528] font-semibold text-base mb-3">
-                ${item.precio.toFixed(2)}
+                {formatoPrecio(item.precio)}
               </p>
               <button
                 onClick={() => agregarAlCarrito(item)}
@@ -96,7 +113,7 @@ export default function Pedidos() {
                     {p.nombre} x {p.cantidad}
                   </span>
                   <span className="text-[#a47528] font-semibold">
-                    ${(p.precio * p.cantidad).toFixed(2)}
+                    {formatoPrecio(p.precio * p.cantidad)}
                   </span>
                   <button
                     onClick={() => quitarDelCarrito(p.id)}
@@ -108,15 +125,23 @@ export default function Pedidos() {
               ))}
 
               <div className="text-right font-bold text-xl text-[#3e2f1c] mt-4">
-                Total: ${total.toFixed(2)}
+                Total: {formatoPrecio(total)}
               </div>
 
-              <button
-                onClick={() => (window.location.href = "/carrito")}
-                className="sello-btn w-full mt-6"
-              >
-                Ir al Carrito
-              </button>
+              <div className="flex gap-4 mt-6">
+                <button
+                  onClick={() => navigate("/carrito")}
+                  className="sello-btn w-full"
+                >
+                  Ir al Carrito
+                </button>
+                <button
+                  onClick={vaciarCarrito}
+                  className="sello-btn azul w-full bg-red-600 hover:bg-red-700"
+                >
+                  Vaciar Carrito
+                </button>
+              </div>
             </div>
           )}
         </div>

@@ -16,19 +16,10 @@ function PedidoCard({ pedido }) {
   const idxActual = flujoEstados.findIndex(f => f.estado === pedido.estado);
 
   return (
-    <div
-      className="bg-[#fdf6e3] border border-amber-900/30 rounded-xl shadow-lg p-6 mb-6 hover:shadow-2xl transition-transform transform hover:-translate-y-1"
-      style={{
-        backgroundImage: "url('/images/pergamino-card.jpg')",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <h3 className="text-xl font-bold font-serif text-[#4b1e05] mb-2">
-        Pedido #{pedido.id}
-      </h3>
-      <p className="text-[#5a3b1a] mb-2">Total: S/ {pedido.total.toFixed(2)}</p>
-      <p className="text-[#5a3b1a] mb-4">Fecha: {pedido.fecha_pedido}</p>
+    <div className="bg-[#fffdf5] border border-[#e3d4a5] rounded-2xl shadow-md p-5 mb-6 transition transform hover:scale-105 hover:shadow-lg">
+      <h3 className="font-bold text-[#3e2f1c] text-lg mb-1">Pedido #{pedido.id}</h3>
+      <p className="text-[#3e2f1c] mb-1">Total: S/ {pedido.total.toFixed(2)}</p>
+      <p className="text-[#3e2f1c] mb-3">Fecha: {pedido.fecha_pedido}</p>
 
       {/* Barra de progreso */}
       <div className="w-full flex justify-between items-center mb-2">
@@ -41,7 +32,7 @@ function PedidoCard({ pedido }) {
                   completado ? s.color : "bg-gray-200"
                 }`}
               />
-              <span className="text-xs block text-center mt-1 text-[#3b1d0f]">
+              <span className="text-xs block text-center mt-1 text-[#3e2f1c]">
                 {s.label}
               </span>
             </div>
@@ -49,6 +40,12 @@ function PedidoCard({ pedido }) {
         })}
       </div>
 
+      {pedido.estado === "CONFIRMADO" && (
+        <p className="text-blue-600 font-semibold mt-2">Pedido Confirmado</p>
+      )}
+      {pedido.estado === "EN_CAMINO" && (
+        <p className="text-yellow-600 font-semibold mt-2">Pedido en Camino</p>
+      )}
       {pedido.estado === "ENTREGADO" && (
         <p className="text-green-600 font-semibold mt-2">Pedido Entregado</p>
       )}
@@ -101,45 +98,28 @@ export default function PerfilCliente() {
 
   return (
     <MainLayout>
-      <div
-        className="min-h-screen bg-cover bg-center bg-fixed py-12"
-        style={{
-          backgroundImage: "url('/images/pergamino-textura.jpg')",
-          backgroundColor: "#f8f3e7",
-        }}
-      >
-        <div className="bg-white/85 max-w-6xl mx-auto p-10 rounded-2xl shadow-2xl backdrop-blur-sm border border-amber-800/40">
-          {/* Encabezado */}
-          <div className="text-center mb-10">
-            <h1 className="text-4xl font-serif text-[#3b1d0f] mb-2 drop-shadow-md tracking-wide">
-              Mi Perfil
-            </h1>
-            <div className="flex justify-center">
-              <img
-                src="/images/fleur-divider.png"
-                alt=""
-                className="h-6 mt-2 opacity-80"
-              />
-            </div>
-          </div>
+      <div className="max-w-6xl mx-auto pergamino-card mt-10 p-8">
+        {/* Encabezado */}
+        <h1 className="pergamino-title text-3xl text-center mb-10">
+          Mi Perfil
+        </h1>
 
-          {/* Datos personales */}
-          <div className="bg-[#fdf6e3] border border-amber-900/30 rounded-xl p-6 mb-10 shadow-lg">
-            <h2 className="font-semibold text-lg mb-4 text-[#4b1e05]">Datos Personales</h2>
-            <p className="text-[#5a3b1a]"><strong>Nombre:</strong> {perfil.nombre}</p>
-            <p className="text-[#5a3b1a]"><strong>Correo:</strong> {perfil.correo}</p>
-            <p className="text-[#5a3b1a]"><strong>Teléfono:</strong> {perfil.telefono}</p>
-            <p className="text-[#5a3b1a]"><strong>Dirección:</strong> {perfil.direccion ?? "—"}</p>
-          </div>
-
-          {/* Historial de pedidos */}
-          <h2 className="text-2xl font-bold mb-6 text-[#3b1d0f]">Historial de Pedidos</h2>
-          {perfil.historialPedidos && perfil.historialPedidos.length > 0 ? (
-            perfil.historialPedidos.map((p) => <PedidoCard key={p.id} pedido={p} />)
-          ) : (
-            <p className="text-gray-600 italic">No tienes pedidos aún.</p>
-          )}
+        {/* Datos personales */}
+        <div className="bg-[#fffdf5] border border-[#e3d4a5] rounded-2xl p-5 mb-10 shadow-md">
+          <h2 className="font-bold text-[#3e2f1c] text-lg mb-4">Datos Personales</h2>
+          <p className="text-[#3e2f1c]"><strong>Nombre:</strong> {perfil.nombre}</p>
+          <p className="text-[#3e2f1c]"><strong>Correo:</strong> {perfil.correo}</p>
+          <p className="text-[#3e2f1c]"><strong>Teléfono:</strong> {perfil.telefono}</p>
+          <p className="text-[#3e2f1c]"><strong>Dirección:</strong> {perfil.direccion ?? "—"}</p>
         </div>
+
+        {/* Historial de pedidos */}
+        <h2 className="font-bold text-[#3e2f1c] text-2xl mb-6 text-center">Historial de Pedidos</h2>
+        {perfil.historialPedidos && perfil.historialPedidos.length > 0 ? (
+          perfil.historialPedidos.map((p) => <PedidoCard key={p.id} pedido={p} />)
+        ) : (
+          <p className="text-gray-600 italic text-center">No tienes pedidos aún.</p>
+        )}
       </div>
     </MainLayout>
   );
