@@ -5,18 +5,24 @@ import AdminLayout from "../layouts/AdminLayout";
 export default function AdminPedidos() {
   const [pedidos, setPedidos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
-  const [expandido, setExpandido] = useState({}); // <- para expandir detalles
+  const [expandido, setExpandido] = useState({});
   const [clienteExpandido, setClienteExpandido] = useState({});
+  const [loading, setLoading] = useState({}); // Para controlar botones deshabilitados
+  const flujoEstados = [
+    { estado: "PENDIENTE", label: "Pendiente", color: "bg-gray-300" },
+    { estado: "CONFIRMADO", label: "Confirmado", color: "bg-blue-400" },
+    { estado: "EN_CAMINO", label: "En Camino", color: "bg-yellow-500" },
+    { estado: "ENTREGADO", label: "Entregado", color: "bg-green-400" },
+    { estado: "CANCELADO", label: "Cancelado", color: "bg-red-500" },
+  ];
+
 
 
   const fetchPedidos = async () => {
     try {
       const res = await axios.get("http://localhost:8070/api/pedidos", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-
       setPedidos(res.data);
     } catch (err) {
       console.error("Error cargando pedidos:", err);
@@ -28,78 +34,55 @@ export default function AdminPedidos() {
     fetchPedidos();
   }, []);
 
-  const confirmarPedido = async (id) => {
-  try {
-    await axios.put(
-      `http://localhost:8070/api/pedidos/${id}/confirmar`,
-      {},
-      { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-    );
+  const actualizarEstado = async (id, estado) => {
+    setLoading((prev) => ({ ...prev, [id]: true }));
 
-    fetchPedidos();
-    alert("✅ Pedido marcado como ENTREGADO.");
-  } catch (err) {
-    console.error("Error al confirmar:", err);
-    alert("❌ No se pudo confirmar el pedido.");
-  }
-};
+    try {
+      await axios.put(
+        `http://localhost:8070/api/pedidos/${id}/estado`,
+        { estado },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+      );
 
-const rechazarPedido = async (id) => {
-  try {
-    await axios.put(
-      `http://localhost:8070/api/pedidos/${id}/rechazar`,
-      {},
-      { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-    );
-
-    fetchPedidos();
-    alert("⚠️ Pedido cancelado.");
-  } catch (err) {
-    console.error("Error al cancelar:", err);
-    alert("❌ No se pudo cancelar el pedido.");
-  }
-};
-
+      await fetchPedidos();
+    } catch (err) {
+      console.error("Error al actualizar estado:", err);
+      alert("❌ No se pudo actualizar el estado.");
+    } finally {
+      setLoading((prev) => ({ ...prev, [id]: false }));
+    }
+  };
 
   const eliminarPedido = async (id) => {
     if (!window.confirm("¿Seguro que deseas eliminar este pedido?")) return;
+    setLoading((prev) => ({ ...prev, [id]: true }));
 
     try {
       await axios.delete(`http://localhost:8070/api/pedidos/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-
       await fetchPedidos();
       alert("🗑️ Pedido eliminado correctamente");
     } catch (err) {
       console.error("Error al eliminar:", err);
       alert("❌ No se pudo eliminar el pedido.");
+    } finally {
+      setLoading((prev) => ({ ...prev, [id]: false }));
     }
   };
 
   const toggleExpand = (id) => {
-    setExpandido((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setExpandido((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const toggleCliente = (id) => {
-  setClienteExpandido((prev) => ({
-    ...prev,
-    [id]: !prev[id],
-  }));
-};
-
-
+    setClienteExpandido((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const pedidosFiltrados = pedidos.filter((p) => {
     const nombre = p.usuario?.nombre?.toLowerCase() || "";
     const estado = p.estado?.toLowerCase() || "";
     const termino = busqueda.toLowerCase();
-
     return nombre.includes(termino) || estado.includes(termino);
   });
 
@@ -110,7 +93,6 @@ const rechazarPedido = async (id) => {
           Gestión de Pedidos
         </h1>
 
-        {/* Buscador */}
         <div className="flex justify-between mb-6 items-center">
           <input
             type="text"
@@ -124,7 +106,6 @@ const rechazarPedido = async (id) => {
           </button>
         </div>
 
-        {/* Tabla */}
         <div className="overflow-x-auto">
           <table className="w-full border border-[#d2b48c] rounded-md text-center">
             <thead className="bg-[#f8ecd1]">
@@ -143,90 +124,101 @@ const rechazarPedido = async (id) => {
               {pedidosFiltrados.length > 0 ? (
                 pedidosFiltrados.map((p) => (
                   <>
-                    <tr key={p.id} className="hover:bg-[#fff9ee] transition">
-                      <td className="border border-[#d2b48c] px-4 py-2">
-                        {p.usuario?.nombre ?? "—"}
-                      </td>
 
+                    <tr key={p.id} className="hover:bg-[#fff9ee] transition">
+                      <td className="border border-[#d2b48c] px-4 py-2">{p.usuario?.nombre ?? "—"}</td>
                       <td className="border border-[#d2b48c] px-4 py-2">
                         {p.direccion ?? "—"} <br />
-                        <span className="text-xs italic text-gray-600">
-                          {p.referencia}
-                        </span>
+                        <span className="text-xs italic text-gray-600">{p.referencia}</span>
                       </td>
-
-                      <td className="border border-[#d2b48c] px-4 py-2">
-                        S/ {p.total?.toFixed(2)}
-                      </td>
-
-                      <td className="border border-[#d2b48c] px-4 py-2">
-                        {p.fecha_pedido}
-                      </td>
-
-                      <td
-                        className={`border border-[#d2b48c] px-4 py-2 font-semibold ${
-                          p.estado === "ENTREGADO"
-                            ? "text-green-700"
-                            : p.estado === "CANCELADO"
-                            ? "text-red-700"
-                            : "text-yellow-700"
-                        }`}
-                      >
+                      <td className="border border-[#d2b48c] px-4 py-2">S/ {p.total?.toFixed(2)}</td>
+                      <td className="border border-[#d2b48c] px-4 py-2">{p.fecha_pedido}</td>
+                      <td className={`border border-[#d2b48c] px-4 py-2 font-semibold ${
+                        p.estado === "ENTREGADO" ? "text-green-700" :
+                        p.estado === "CANCELADO" ? "text-red-700" :
+                        p.estado === "EN CAMINO" ? "text-yellow-800" :
+                        "text-yellow-700"
+                      }`}>
                         {p.estado}
                       </td>
 
-                      <td className="border border-[#d2b48c] px-4 py-2 flex gap-2 justify-center">
-                        <button
-                          onClick={() => confirmarPedido(p.id)}
-                          className="sello-btn azul sm"
-                        >
-                          Entregado
-                        </button>
+                      <div className="w-full flex justify-between items-center mb-2">
+                        {flujoEstados.map((s, i) => {
+                          const idxActual = flujoEstados.findIndex(f => f.estado === p.estado);
+                          const completado = i <= idxActual;
+                          return (
+                            <div key={s.estado} className="flex-1 mx-1">
+                              <div
+                                className={`h-2 rounded-full transition-all ${
+                                  completado ? s.color : "bg-gray-200"
+                                }`}
+                              />
+                              <span className="text-xs block text-center mt-1">{s.label}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
 
-                        <button
-                          onClick={() => rechazarPedido(p.id)}
-                          className="sello-btn sm"
-                        >
-                          Rechazar
-                        </button>
-                        <button
-                          onClick={() => eliminarPedido(p.id)}
-                          className="sello-btn dorado sm"
-                        >
-                          Eliminar
-                        </button>
-                      </td>
+                     <div className="flex gap-2 justify-center flex-wrap">
+                          {p.estado === "PENDIENTE" && (
+                            <>
+                              <button
+                                onClick={() => actualizarEstado(p.id, "CONFIRMADO")}
+                                className="sello-btn azul sm"
+                              >
+                                Confirmar
+                              </button>
+                              <button
+                                onClick={() => actualizarEstado(p.id, "CANCELADO")}
+                                className="sello-btn rojo sm"
+                              >
+                                Cancelar
+                              </button>
+                            </>
+                          )}
+
+                          {p.estado === "CONFIRMADO" && (
+                            <button
+                              onClick={() => actualizarEstado(p.id, "EN_CAMINO")}
+                              className="sello-btn dorado sm"
+                            >
+                              En Camino
+                            </button>
+                          )}
+
+                          {p.estado === "EN_CAMINO" && (
+                            <button
+                              onClick={() => actualizarEstado(p.id, "ENTREGADO")}
+                              className="sello-btn verde sm"
+                            >
+                              Entregado
+                            </button>
+                          )}
+
+                          {p.estado === "ENTREGADO" || p.estado === "CANCELADO" ? (
+                            <button disabled className="sello-btn sm opacity-50 cursor-not-allowed">
+                              Acción completada
+                            </button>
+                          ) : null}
+                        </div>
 
                       <td className="border border-[#d2b48c] px-4 py-2">
                         <div className="flex flex-col gap-2">
-
-                          {/* Botón 1 - Detalles del pedido */}
-                          <button
-                            onClick={() => toggleExpand(p.id)}
-                            className="sello-btn azul sm w-full"
-                          >
+                          <button onClick={() => toggleExpand(p.id)} className="sello-btn azul sm w-full">
                             {expandido[p.id] ? "Ocultar Pedido" : "Detalles Pedido"}
                           </button>
-
-                          {/* Botón 2 - Detalles del cliente */}
-                          <button
-                            onClick={() => toggleCliente(p.id)}
-                            className="sello-btn verde sm w-full"
-                          >
+                          <button onClick={() => toggleCliente(p.id)} className="sello-btn sm w-full">
                             {clienteExpandido[p.id] ? "Ocultar Cliente" : "Detalles Cliente"}
                           </button>
                         </div>
                       </td>
                     </tr>
 
-                    {/* DETALLES EXPANDIBLES */}
+                    {/* Detalles Pedido */}
                     {expandido[p.id] && (
                       <tr className="bg-[#fff9ee]">
                         <td colSpan={7} className="p-4">
-                          <h3 className="text-lg font-bold mb-2 text-[#7b1e1e]">
-                            Productos del pedido
-                          </h3>
-
+                          <h3 className="text-lg font-bold mb-2 text-[#7b1e1e]">Productos del pedido</h3>
                           <table className="w-full text-center border border-[#d2b48c]">
                             <thead className="bg-[#f0e4c3]">
                               <tr>
@@ -236,19 +228,12 @@ const rechazarPedido = async (id) => {
                                 <th className="border px-2 py-1">Subtotal</th>
                               </tr>
                             </thead>
-
                             <tbody>
                               {p.detalles?.map((d) => (
                                 <tr key={d.id}>
-                                  <td className="border px-2 py-1">
-                                    {d.producto?.nombre}
-                                  </td>
-                                  <td className="border px-2 py-1">
-                                    {d.cantidad}
-                                  </td>
-                                  <td className="border px-2 py-1">
-                                    S/ {d.precio_unitario.toFixed(2)}
-                                  </td>
+                                  <td className="border px-2 py-1">{d.producto?.nombre}</td>
+                                  <td className="border px-2 py-1">{d.cantidad}</td>
+                                  <td className="border px-2 py-1">S/ {d.precio_unitario.toFixed(2)}</td>
                                   <td className="border px-2 py-1 font-semibold">
                                     S/ {(d.cantidad * d.precio_unitario).toFixed(2)}
                                   </td>
@@ -259,13 +244,12 @@ const rechazarPedido = async (id) => {
                         </td>
                       </tr>
                     )}
+
+                    {/* Detalles Cliente */}
                     {clienteExpandido[p.id] && (
                       <tr className="bg-[#fff9ee]">
                         <td colSpan={7} className="p-4">
-                          <h3 className="text-lg font-bold mb-2 text-[#7b1e1e]">
-                            Detalles del Cliente
-                          </h3>
-
+                          <h3 className="text-lg font-bold mb-2 text-[#7b1e1e]">Detalles del Cliente</h3>
                           <table className="w-full text-center border border-[#d2b48c]">
                             <thead className="bg-[#f0e4c3]">
                               <tr>
@@ -275,7 +259,6 @@ const rechazarPedido = async (id) => {
                                 <th className="border px-2 py-1">Dirección</th>
                               </tr>
                             </thead>
-
                             <tbody>
                               <tr>
                                 <td className="border px-2 py-1">{p.usuario?.nombre ?? "—"}</td>

@@ -1429,3 +1429,35 @@
 2025-12-07 20:34:13,071 [Worker-6: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2025-12-07 20:34:13,223 [Worker-6: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
 2025-12-07 20:34:13,237 [Worker-6: Launching lafrance - LafranceApplication] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-07 22:56:09,712 [Worker-4: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2025-12-08 00:12:56,996 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 00:12:57,019 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 00:12:57,026 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-08 00:13:58,524 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 00:13:58,544 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 00:13:58,553 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-08 00:21:54,247 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 00:21:54,254 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 00:21:54,257 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-08 00:24:20,476 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 00:24:20,492 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 00:24:20,496 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-08 00:24:38,196 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 00:24:38,205 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 00:24:38,210 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-08 00:25:06,850 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 00:25:06,853 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 00:25:06,857 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-08 00:25:27,098 [Worker-6: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2025-12-08 00:29:09,728 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 00:29:09,746 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 00:29:09,754 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-08 01:03:24,459 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 01:03:24,474 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 01:03:24,478 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-08 01:23:45,524 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 01:23:45,545 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 01:23:45,549 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources
+2025-12-08 01:24:07,171 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-12-08 01:24:07,177 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 2 resources from src\main\resources to target\classes
+2025-12-08 01:24:07,182 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Sistema_de_Reservas_y_Pedidos_en_Línea\lafrance-web\lafrance\src\test\resources

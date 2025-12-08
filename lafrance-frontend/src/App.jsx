@@ -18,6 +18,7 @@ import DireccionPage from "./pages/DirectionPage";
 import PrivateRoute from "./components/PrivateRoute";
 import ConfirmacionPedido from "./pages/ConfirmacionPedido";
 import { CartProvider } from "./context/CartContext";
+import PerfilUsuario from "./pages/PerfilUsuario";
 
 
 export default function App() {
@@ -76,6 +77,14 @@ export default function App() {
             element={
               <PrivateRoute role="CLIENTE">
                 <ConfirmacionPedido />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/perfil"
+            element={
+              <PrivateRoute role="CLIENTE">
+                <PerfilUsuario />
               </PrivateRoute>
             }
           />

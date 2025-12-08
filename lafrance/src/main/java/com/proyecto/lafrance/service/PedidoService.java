@@ -142,31 +142,33 @@ public class PedidoService {
 		return pedidoRepository.findAll();
 	}
 
-	public Pedido actualizarEstado(Long pedidoId, String nuevoEstado) {
-        // 1. Buscar el pedido por su ID
-        Optional<Pedido> pedidoOptional = pedidoRepository.findById(pedidoId);
+	public void actualizarEstado(Long pedidoId, String nuevoEstado, String correoUsuario) {
+	    Pedido pedido = pedidoRepository.findById(pedidoId)
+	            .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
 
-        if (pedidoOptional.isPresent()) {
-            Pedido pedido = pedidoOptional.get();
-            
-            // 2. Aplicar validaciones (Opcional pero muy recomendado)
-            // Ejemplo: Solo puedes confirmar/rechazar si el estado actual es "PENDIENTE"
-            if (!"PENDIENTE".equals(pedido.getEstado())) {
-                System.out.println("No se puede actualizar el pedido " + pedidoId + 
-                                   " porque su estado actual es: " + pedido.getEstado());
-                return null; // O podrías lanzar una excepción
-            }
-            
-            // 3. Actualizar el campo 'estado'
-            pedido.setEstado(nuevoEstado);
-            
-            // 4. Guardar la entidad actualizada en la base de datos
-            return pedidoRepository.save(pedido);
-        }
-        
-        // 5. Devolver null si el pedido no fue encontrado
-        return null;
-    }
+	    // Validar transición de estado si quieres
+	    switch (pedido.getEstado()) {
+	        case "PENDIENTE":
+	            if (!nuevoEstado.equals("CONFIRMADO") && !nuevoEstado.equals("CANCELADO"))
+	                throw new RuntimeException("Transición de estado no permitida");
+	            break;
+	        case "CONFIRMADO":
+	            if (!nuevoEstado.equals("EN CAMINO") && !nuevoEstado.equals("CANCELADO"))
+	                throw new RuntimeException("Transición de estado no permitida");
+	            break;
+	        case "EN CAMINO":
+	            if (!nuevoEstado.equals("ENTREGADO"))
+	                throw new RuntimeException("Transición de estado no permitida");
+	            break;
+	        case "ENTREGADO":
+	        case "CANCELADO":
+	            throw new RuntimeException("Pedido ya finalizado");
+	    }
+
+	    pedido.setEstado(nuevoEstado);
+	    pedidoRepository.save(pedido);
+	}
+
 	
 	public void confirmarPedidoPorId(Long id, String correoUsuario) {
 
@@ -178,7 +180,7 @@ public class PedidoService {
 	        throw new RuntimeException("El pedido ya fue procesado");
 	    }
 
-	    pedido.setEstado("CONFIRMADO");
+	    pedido.setEstado("ENTREGADO");
 	    pedidoRepository.save(pedido);
 	}
 
@@ -201,6 +203,18 @@ public class PedidoService {
 	        throw new RuntimeException("Pedido no encontrado");
 	    }
 	    pedidoRepository.deleteById(id);
+	}
+
+	public List<Pedido> listarPorUsuario(Long usuarioId) {
+	    return pedidoRepository.findByUsuarioId(usuarioId);
+	}
+	
+	public Pedido obtenerPorId(Long id) {
+	    return pedidoRepository.findById(id).orElse(null);
+	}
+
+	public Pedido guardarPedido(Pedido pedido) {
+	    return pedidoRepository.save(pedido);
 	}
 
 

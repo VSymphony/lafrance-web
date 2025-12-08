@@ -87,6 +87,12 @@ public class PedidoController {
 
         return ResponseEntity.ok(new PedidoResponse("Dirección guardada", null));
     }
+    
+    @GetMapping()
+    public List<Pedido> listar() {
+        return pedidoService.listarTodos();
+    }
+    
 
     // ✅ Confirmar pedido
     @PostMapping("/confirmar")
@@ -126,74 +132,61 @@ public class PedidoController {
         );
     }
     
-    @GetMapping()
-    public List<Pedido> listar() {
-        return pedidoService.listarTodos();
-    }
     
- // =============================
-	//  CONFIRMAR PEDIDO POR ID
-	// =============================
-	@PutMapping("/{id}/confirmar")
-	public ResponseEntity<?> confirmarPedidoPorId(
-	        @PathVariable Long id,
-	        @RequestHeader(value = "Authorization", required = false) String auth) {
-	
-	    // Validar token
-	    if (auth == null || !auth.startsWith("Bearer ")) {
-	        return ResponseEntity.status(401)
-	                .body(Map.of("message", "Token no proporcionado"));
-	    }
-	
-	    String token = auth.substring(7);
-	    if (!jwtUtil.validarToken(token)) {
-	        return ResponseEntity.status(401)
-	                .body(Map.of("message", "Token inválido"));
-	    }
-	
-	    // Obtener correo desde el token
-	    String correo = jwtUtil.obtenerCorreo(token);
-	
-	    try {
-	        pedidoService.confirmarPedidoPorId(id, correo);
-	        return ResponseEntity.ok(Map.of("message", "Pedido confirmado"));
-	    } catch (Exception e) {
-	        return ResponseEntity.status(400)
-	                .body(Map.of("message", e.getMessage()));
-	    }
-	}
-	
-	
-	// =============================
-	//  RECHAZAR PEDIDO POR ID
-	// =============================
-	@PutMapping("/{id}/rechazar")
-	public ResponseEntity<?> rechazarPedidoPorId(
-	        @PathVariable Long id,
-	        @RequestHeader(value = "Authorization", required = false) String auth) {
-	
-	    // Validar token
-	    if (auth == null || !auth.startsWith("Bearer ")) {
-	        return ResponseEntity.status(401)
-	                .body(Map.of("message", "Token no proporcionado"));
-	    }
-	
-	    String token = auth.substring(7);
-	    if (!jwtUtil.validarToken(token)) {
-	        return ResponseEntity.status(401)
-	                .body(Map.of("message", "Token inválido"));
-	    }
-	
-	    String correo = jwtUtil.obtenerCorreo(token);
-	
-	    try {
-	        pedidoService.rechazarPedidoPorId(id, correo);
-	        return ResponseEntity.ok(Map.of("message", "Pedido rechazado"));
-	    } catch (Exception e) {
-	        return ResponseEntity.status(400)
-	                .body(Map.of("message", e.getMessage()));
-	    }
-	}
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<?> actualizarEstado(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body,
+            @RequestHeader(value = "Authorization", required = false) String auth) {
+
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            return ResponseEntity.status(401)
+                    .body(Map.of("message", "Token no proporcionado"));
+        }
+
+        String token = auth.substring(7);
+        if (!jwtUtil.validarToken(token)) {
+            return ResponseEntity.status(401)
+                    .body(Map.of("message", "Token inválido"));
+        }
+
+        String nuevoEstado = body.get("estado");
+        if (nuevoEstado == null || nuevoEstado.isBlank()) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("message", "Se debe proporcionar un estado válido"));
+        }
+
+        try {
+            Pedido pedido = pedidoService.obtenerPorId(id);
+            if (pedido == null) {
+                return ResponseEntity.status(404).body(Map.of("message", "Pedido no encontrado"));
+            }
+
+            // Validar transición de estados
+            String estadoActual = pedido.getEstado();
+            boolean valido = switch (estadoActual) {
+                case "PENDIENTE" -> nuevoEstado.equals("CONFIRMADO") || nuevoEstado.equals("CANCELADO");
+                case "CONFIRMADO" -> nuevoEstado.equals("EN_CAMINO") || nuevoEstado.equals("CANCELADO");
+                case "EN_CAMINO" -> nuevoEstado.equals("ENTREGADO");
+                default -> false;
+            };
+
+            if (!valido) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("message", "Transición de estado inválida"));
+            }
+
+            pedido.setEstado(nuevoEstado);
+            pedidoService.guardarPedido(pedido);
+
+            return ResponseEntity.ok(Map.of("message", "Estado actualizado a " + nuevoEstado));
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                    .body(Map.of("message", "Error al actualizar el estado: " + e.getMessage()));
+        }
+    }
+
+
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminarPedido(

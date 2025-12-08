@@ -98,10 +98,11 @@ export default function Navbar() {
           {isLoggedIn && userRole === "CLIENTE" && (
             <>
               <li><Link to="/cliente" className="hover:text-[#7a0000] transition">Inicio</Link></li>
+              <li><Link to="/perfil" className="hover:text-[#7a0000] transition">Perfil</Link></li>
               <li><Link to="/menu" className="hover:text-[#7a0000] transition">Menú</Link></li>
               <li><Link to="/reservas" className="hover:text-[#7a0000] transition">Reservas</Link></li>
               <li><Link to="/pedidos" className="hover:text-[#7a0000] transition">Pedidos</Link></li>
-
+              
               {/* 🛒 Carrito en NAVBAR (escritorio) */}
               <li>
                 <Link to="/carrito" className="cursor-pointer hover:scale-110 transform transition">
