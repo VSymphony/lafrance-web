@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import MainLayout from "../layouts/MainLayout";
+import AdminLayout from "../layouts/AdminLayout";
 
 export default function AdminReservas() {
   const [reservas, setReservas] = useState([]);
@@ -85,7 +85,7 @@ export default function AdminReservas() {
   });
 
   return (
-    <MainLayout>
+    <AdminLayout>
       <div className="max-w-6xl mx-auto pergamino-card mt-10 p-8">
         <h1 className="pergamino-title text-3xl text-center mb-6">
           Gestión de Reservas
@@ -229,6 +229,6 @@ export default function AdminReservas() {
           </table>
         </div>
       </div>
-    </MainLayout>
+    </AdminLayout>
   );
 }

@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.proyecto.lafrance.dto.DireccionDTO;
 import com.proyecto.lafrance.dto.PedidoRequest;
@@ -136,6 +137,71 @@ public class PedidoService {
     public Usuario obtenerUsuarioPorId(Long id) {
         return usuarioRepository.findById(id).orElse(null);
     }
+
+	public List<Pedido> listarTodos() {
+		return pedidoRepository.findAll();
+	}
+
+	public Pedido actualizarEstado(Long pedidoId, String nuevoEstado) {
+        // 1. Buscar el pedido por su ID
+        Optional<Pedido> pedidoOptional = pedidoRepository.findById(pedidoId);
+
+        if (pedidoOptional.isPresent()) {
+            Pedido pedido = pedidoOptional.get();
+            
+            // 2. Aplicar validaciones (Opcional pero muy recomendado)
+            // Ejemplo: Solo puedes confirmar/rechazar si el estado actual es "PENDIENTE"
+            if (!"PENDIENTE".equals(pedido.getEstado())) {
+                System.out.println("No se puede actualizar el pedido " + pedidoId + 
+                                   " porque su estado actual es: " + pedido.getEstado());
+                return null; // O podrías lanzar una excepción
+            }
+            
+            // 3. Actualizar el campo 'estado'
+            pedido.setEstado(nuevoEstado);
+            
+            // 4. Guardar la entidad actualizada en la base de datos
+            return pedidoRepository.save(pedido);
+        }
+        
+        // 5. Devolver null si el pedido no fue encontrado
+        return null;
+    }
+	
+	public void confirmarPedidoPorId(Long id, String correoUsuario) {
+
+	    Pedido pedido = pedidoRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+
+	    // Solo confirmar si está pendiente
+	    if (!pedido.getEstado().equals("PENDIENTE")) {
+	        throw new RuntimeException("El pedido ya fue procesado");
+	    }
+
+	    pedido.setEstado("CONFIRMADO");
+	    pedidoRepository.save(pedido);
+	}
+
+
+	public void rechazarPedidoPorId(Long id, String correoUsuario) {
+
+	    Pedido pedido = pedidoRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+
+	    if (!pedido.getEstado().equals("PENDIENTE")) {
+	        throw new RuntimeException("El pedido ya fue procesado");
+	    }
+
+	    pedido.setEstado("RECHAZADO");
+	    pedidoRepository.save(pedido);
+	}
+
+	public void eliminarPedido(Long id) {
+	    if (!pedidoRepository.existsById(id)) {
+	        throw new RuntimeException("Pedido no encontrado");
+	    }
+	    pedidoRepository.deleteById(id);
+	}
 
 
 }

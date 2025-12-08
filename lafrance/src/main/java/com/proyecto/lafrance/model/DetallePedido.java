@@ -2,6 +2,8 @@ package com.proyecto.lafrance.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -17,7 +19,9 @@ public class DetallePedido {
 
     @ManyToOne
     @JoinColumn(name = "pedido_id")
+    @JsonBackReference
     private Pedido pedido;
+
 
     @ManyToOne
     @JoinColumn(name = "producto_id")

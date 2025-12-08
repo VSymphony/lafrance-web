@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import Select from "react-select";
-import MainLayout from "../layouts/MainLayout";
+import AdminLayout from "../layouts/AdminLayout";
 
 Modal.setAppElement("#root");
 
@@ -158,7 +158,7 @@ export default function AdminProductos() {
 
 
   return (
-    <MainLayout>
+    <AdminLayout>
     <div className="p-6">
       <h2 className="pergamino-title text-3xl mb-4 text-center">Administrar Productos</h2>
 
@@ -427,6 +427,6 @@ export default function AdminProductos() {
       </Modal>
 
     </div>
-    </MainLayout>
+    </AdminLayout>
   );
 }

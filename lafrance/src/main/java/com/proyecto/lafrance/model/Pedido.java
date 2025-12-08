@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "pedido")
 public class Pedido {
@@ -52,7 +54,9 @@ public class Pedido {
 
     // Relación con DetallePedido
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<DetallePedido> detalles;
+
 
     // Getters y Setters
     public Long getId() { return id; }

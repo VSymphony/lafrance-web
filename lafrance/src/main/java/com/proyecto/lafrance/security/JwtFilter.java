@@ -46,7 +46,7 @@ public class JwtFilter implements Filter {
                     new UsernamePasswordAuthenticationToken(
                             correo,
                             null,
-                            Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + rol)) // importante
+                            Collections.singletonList(new SimpleGrantedAuthority(rol))
                     );
 
             // REGISTRAR AUTENTICACIÓN

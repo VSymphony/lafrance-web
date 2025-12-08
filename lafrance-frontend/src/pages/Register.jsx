@@ -46,6 +46,7 @@ export default function Register() {
             value={form.nombre}
             onChange={handleChange}
             className="border p-2 rounded"
+            title="Por favor Ingresa tu Nombre y Apellido"
             required
           />
           <input
@@ -56,6 +57,7 @@ export default function Register() {
             onChange={handleChange}
             className="border p-2 rounded"
             required
+            title="Por favor ingresa un correo válido con @ y dominio (ejemplo: usuario@gmail.com)"
           />
           <input
             type="password"
@@ -64,6 +66,7 @@ export default function Register() {
             value={form.contrasena}
             onChange={handleChange}
             className="border p-2 rounded"
+            title="Por Favor, Ingresa una Contraseña"
             required
           />
           <input
@@ -73,8 +76,10 @@ export default function Register() {
             value={form.telefono}
             onChange={handleChange}
             className="border p-2 rounded"
+            maxLength={9}
+            pattern="\d{9}"
+            title="El teléfono debe tener exactamente 9 dígitos"
           />
-
           <button
             type="submit"
             className="sello-btn dorado"

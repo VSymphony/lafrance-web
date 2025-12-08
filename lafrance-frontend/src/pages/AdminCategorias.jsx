@@ -6,7 +6,7 @@ import {
   eliminarCategoria,
   actualizarCategoria,
 } from "../services/categoriasService";
-import MainLayout from "../layouts/MainLayout";
+import AdminLayout from "../layouts/AdminLayout"; // <-- Cambiado aquí
 
 Modal.setAppElement("#root");
 
@@ -84,13 +84,13 @@ export default function AdminCategorias() {
   };
 
   return (
-    <MainLayout>
+    <AdminLayout>
       <div className="p-6">
         <h2 className="pergamino-title text-3xl mb-4 text-center">
           Administrar Categorías
         </h2>
 
-        {/* Formulario para nueva categoría */}
+        {/* Formulario */}
         <div className="pergamino-card p-6 mb-6 space-y-3">
           <label className="font-semibold text-[#3e2f1c]">
             Nombre de la categoría
@@ -145,7 +145,7 @@ export default function AdminCategorias() {
           </tbody>
         </table>
 
-        {/* Modal de edición */}
+        {/* Modal */}
         <Modal
           isOpen={modalAbierto}
           onRequestClose={cerrarModal}
@@ -189,6 +189,6 @@ export default function AdminCategorias() {
           </div>
         </Modal>
       </div>
-    </MainLayout>
+    </AdminLayout>
   );
 }
