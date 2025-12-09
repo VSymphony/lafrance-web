@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.lafrance.dto.DireccionDTO;
+import com.proyecto.lafrance.dto.EditarPedidoDTO;
 import com.proyecto.lafrance.dto.PedidoRequest;
 import com.proyecto.lafrance.dto.PedidoResponse;
 import com.proyecto.lafrance.model.Pedido;
@@ -187,7 +188,6 @@ public class PedidoController {
     }
 
 
-
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminarPedido(
 	        @PathVariable Long id,
@@ -212,6 +212,22 @@ public class PedidoController {
 	        return ResponseEntity.status(400)
 	                .body(Map.of("message", e.getMessage()));
 	    }
+	}
+	
+	
+	@PutMapping("/actualizar/{id}")
+	public ResponseEntity<?> actualizarPedido(
+	        @PathVariable Long id,
+	        @RequestBody EditarPedidoDTO dto) {
+
+	    Pedido actualizado = pedidoService.editarPedido(
+	            id,
+	            dto.getDetalles(),    
+	            dto.getDireccion(),   
+	            dto.getReferencia()   
+	    );
+	    
+	    return ResponseEntity.ok(actualizado);
 	}
 
 }

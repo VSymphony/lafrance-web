@@ -14,11 +14,14 @@ import com.proyecto.lafrance.dto.PedidoRequest;
 import com.proyecto.lafrance.dto.DetalleDTO;
 import com.proyecto.lafrance.model.DetallePedido;
 import com.proyecto.lafrance.model.Pedido;
+import com.proyecto.lafrance.model.PedidoItem;
 import com.proyecto.lafrance.model.Producto;
 import com.proyecto.lafrance.model.Usuario;
 import com.proyecto.lafrance.repository.PedidoRepository;
 import com.proyecto.lafrance.repository.ProductoRepository;
 import com.proyecto.lafrance.repository.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class PedidoService {
@@ -214,6 +217,68 @@ public class PedidoService {
 	}
 
 	public Pedido guardarPedido(Pedido pedido) {
+	    return pedidoRepository.save(pedido);
+	}
+
+	@Transactional
+	public Pedido editarPedido(
+	        Long pedidoId,
+	        List<DetalleDTO> nuevosDetalles,
+	        String nuevaDireccion,
+	        String nuevaReferencia
+	) {
+
+	    Pedido pedido = pedidoRepository.findById(pedidoId)
+	            .orElseThrow(() -> new RuntimeException("Pedido no encontrado: " + pedidoId));
+
+	    // -----------------------------
+	    // actualizar dirección
+	    // -----------------------------
+	    if (nuevaDireccion != null && !nuevaDireccion.isBlank()) {
+	        pedido.setDireccion(nuevaDireccion);
+	    }
+
+	    if (nuevaReferencia != null && !nuevaReferencia.isBlank()) {
+	        pedido.setReferencia(nuevaReferencia);
+	    }
+
+	    // -----------------------------
+	    // actualizar productos y cantidades
+	    // -----------------------------
+	    if (nuevosDetalles != null && !nuevosDetalles.isEmpty()) {
+
+	        // limpiar los detalles anteriores
+	        pedido.getDetalles().clear();
+
+	        BigDecimal total = BigDecimal.ZERO;
+
+	        for (DetalleDTO det : nuevosDetalles) {
+
+	            // buscar producto real
+	            Producto producto = productoRepository.findById(det.getProductoId())
+	                    .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + det.getProductoId()));
+
+	            DetallePedido nuevo = new DetallePedido();
+	            nuevo.setPedido(pedido);
+	            nuevo.setProducto(producto);
+	            nuevo.setCantidad(det.getCantidad());
+
+	            // precio desde BD
+	            nuevo.setPrecio_unitario(producto.getPrecio());
+
+	            // calcular subtotal
+	            BigDecimal subtotal = producto.getPrecio()
+	                    .multiply(BigDecimal.valueOf(det.getCantidad()));
+
+	            total = total.add(subtotal);
+
+	            pedido.getDetalles().add(nuevo);
+	        }
+
+	        // actualizar total final
+	        pedido.setTotal(total.doubleValue());
+	    }
+
 	    return pedidoRepository.save(pedido);
 	}
 

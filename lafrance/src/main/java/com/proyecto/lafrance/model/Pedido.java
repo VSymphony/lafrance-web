@@ -81,10 +81,7 @@ public class Pedido {
             detalles.forEach(d -> d.setPedido(this));
         }
     }
-	public void setMetodoPago(String metodoPago) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	public void setDireccionId(Long direccionId) {
 		// TODO Auto-generated method stub
 		
