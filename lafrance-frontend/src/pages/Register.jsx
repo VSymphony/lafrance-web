@@ -46,9 +46,13 @@ export default function Register() {
             value={form.nombre}
             onChange={handleChange}
             className="border p-2 rounded"
-            title="Por favor Ingresa tu Nombre y Apellido"
             required
+            onInvalid={(e) =>
+              e.target.setCustomValidity("Por favor ingrese su nombre completo")
+            }
+            onInput={(e) => e.target.setCustomValidity("")}
           />
+
           <input
             type="email"
             name="correo"
@@ -57,8 +61,12 @@ export default function Register() {
             onChange={handleChange}
             className="border p-2 rounded"
             required
-            title="Por favor ingresa un correo válido con @ y dominio (ejemplo: usuario@gmail.com)"
+            onInvalid={(e) =>
+              e.target.setCustomValidity("Por favor ingrese un correo válido")
+            }
+            onInput={(e) => e.target.setCustomValidity("")}
           />
+
           <input
             type="password"
             name="contrasena"
@@ -66,9 +74,13 @@ export default function Register() {
             value={form.contrasena}
             onChange={handleChange}
             className="border p-2 rounded"
-            title="Por Favor, Ingresa una Contraseña"
             required
+            onInvalid={(e) =>
+              e.target.setCustomValidity("Por favor ingrese una contraseña")
+            }
+            onInput={(e) => e.target.setCustomValidity("")}
           />
+
           <input
             type="text"
             name="telefono"
@@ -78,15 +90,18 @@ export default function Register() {
             className="border p-2 rounded"
             maxLength={9}
             pattern="\d{9}"
-            title="El teléfono debe tener exactamente 9 dígitos"
+            required
+            onInvalid={(e) =>
+              e.target.setCustomValidity("Por favor ingrese un teléfono de 9 dígitos")
+            }
+            onInput={(e) => e.target.setCustomValidity("")}
           />
-          <button
-            type="submit"
-            className="sello-btn dorado"
-          >
+
+          <button type="submit" className="sello-btn dorado">
             Registrarse
           </button>
         </form>
+
 
         {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
       </div>

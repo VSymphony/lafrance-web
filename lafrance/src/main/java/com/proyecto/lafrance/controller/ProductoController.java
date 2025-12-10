@@ -4,10 +4,16 @@ import com.proyecto.lafrance.dto.ProductoDTO;
 import com.proyecto.lafrance.model.Categoria;
 import com.proyecto.lafrance.model.Producto;
 import com.proyecto.lafrance.repository.CategoriaRepository;
+import com.proyecto.lafrance.repository.ProductoRepository;
 import com.proyecto.lafrance.service.ProductoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -16,6 +22,9 @@ public class ProductoController {
 
     private final ProductoService productoService;
     private final CategoriaRepository categoriaRepository;
+    
+    @Autowired
+    private ProductoRepository productoRepository;
 
     public ProductoController(ProductoService productoService, CategoriaRepository categoriaRepository) {
         this.productoService = productoService;
@@ -66,9 +75,24 @@ public class ProductoController {
         return producto;
     }
 
+    
+    @PutMapping("/{id}/toggle")
+    public ResponseEntity<?> cambiarEstadoProducto(@PathVariable Long id) {
 
-    @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        productoService.eliminar(id);
+        return productoRepository.findById(id)
+            .map(producto -> {
+                producto.setActivo(!producto.isActivo());
+                productoRepository.save(producto);
+
+                return ResponseEntity.ok(Map.of(
+                    "message", producto.isActivo() ? "Producto habilitado" : "Producto deshabilitado",
+                    "activo", producto.isActivo(),
+                    "id", producto.getId()
+                ));
+            })
+            .orElseGet(() -> ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(Map.of("error", "Producto no encontrado")));
     }
+
 }

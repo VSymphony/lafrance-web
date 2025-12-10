@@ -35,6 +35,22 @@ export default function AdminProductos() {
     }
   };
 
+  const toggleProducto = async (id) => {
+    try {
+      const res = await axios.put(`http://localhost:8070/api/productos/${id}/toggle`);
+      const actualizado = res.data.activo;
+
+      setProductos((prev) =>
+        prev.map((p) =>
+          p.id === id ? { ...p, activo: actualizado } : p
+        )
+      );
+    } catch (e) {
+      console.error("Error cambiando estado del producto", e);
+    }
+  };
+
+
   const cargarCategorias = async () => {
     try {
       const res = await axios.get("http://localhost:8070/api/categorias");
@@ -278,10 +294,12 @@ export default function AdminProductos() {
                     Editar
                   </button>
                   <button
-                    onClick={() => borrarProducto(p.id)}
-                    className="sello-btn sm"
+                    onClick={() => toggleProducto(p.id)}
+                    className={`px-3 py-1 rounded 
+                      ${p.activo ? "sello-btn sm" : "sello-btn verde sm"} 
+                      text-white`}
                   >
-                    Eliminar
+                    {p.activo ? "Deshabilitar" : "Habilitar"}
                   </button>
                 </div>
               </td>

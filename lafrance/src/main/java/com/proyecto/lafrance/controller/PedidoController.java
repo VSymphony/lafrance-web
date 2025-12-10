@@ -22,6 +22,7 @@ import com.proyecto.lafrance.model.Pedido;
 import com.proyecto.lafrance.model.Producto;
 import com.proyecto.lafrance.model.Usuario;
 import com.proyecto.lafrance.repository.PedidoRepository;
+import com.proyecto.lafrance.repository.ProductoRepository;
 import com.proyecto.lafrance.security.JwtUtil;
 import com.proyecto.lafrance.service.PedidoService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -229,5 +230,6 @@ public class PedidoController {
 	    
 	    return ResponseEntity.ok(actualizado);
 	}
-
+	
+	
 }

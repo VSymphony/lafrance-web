@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="jakarta.persistence.Table"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.ProductoDTO"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.model.Categoria"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
@@ -30,7 +29,6 @@
     <fullyQualifiedTypeName name="jakarta.persistence.Id"/>
     <fullyQualifiedTypeName name="jakarta.persistence.GeneratedValue"/>
     <fullyQualifiedTypeName name="jakarta.persistence.GenerationType"/>
-    <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.ProductoRepository"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.dto.PedidoResponse"/>
     <fullyQualifiedTypeName name="java.nio.charset.StandardCharsets"/>
@@ -60,4 +58,6 @@
     <fullyQualifiedTypeName name="jakarta.persistence.JoinColumn"/>
     <fullyQualifiedTypeName name="com.proyecto.lafrance.model.PedidoItem"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.proyecto.lafrance.repository.ProductoRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
 </qualifiedTypeNameHistroy>

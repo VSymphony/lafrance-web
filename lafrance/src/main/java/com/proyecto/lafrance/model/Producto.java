@@ -24,6 +24,13 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+    
+    @Column(nullable = false)
+    private boolean activo = true;
+
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
+
 
     public Producto() {}
 
